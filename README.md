@@ -8,7 +8,6 @@ The documentation can be found in the "documentation" folder as a doccarchive.
 
 # Getting started
 
-
 The SDK is a convienient wrapper around the White Label Rest API. It provides a way solution to register the user device and store tokens for offline usage.  
 
 - Configuration
@@ -20,14 +19,14 @@ The SDK is a convienient wrapper around the White Label Rest API. It provides a 
 
 ## Configuration
 
-You have to call the main static function ``WhitelabelPay/WhitelabelPay/configure(with:)`` to configure the SDK and retrieve an instance of ``WhitelabelPay``.
+To instantiate an instance of ``WhitelabelPay`` please use  ``WhitelabelPay/WhitelabelPay/init(config:urlSessionConfiguration:)``. The initializer has also an optional param called `urlSessionConfiguration`, if you need to customize the URLSession configuration, please pass your custom config and WhitelabelPay will use it internally. 
 
-> Important: The host app will be responsible for keeping the reference to the ``WhitelabelPay`` instance.*
-
-The function receives a parameter of type ``Configuration`` that receives tree params
+The ``Configuration`` struc needs tree params:
 - Vendor's **`tenanId`** of type `String`. 
 - **`environment`** of type ``Env``
 - **`azp`**: JWT - Authorized party of type `String`.
+
+> Important: The host app will be responsible for keeping the reference to the ``WhitelabelPay`` instance.
 
 Example usage:
 ```swift
@@ -37,7 +36,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
                                       environment: .development,
                                       azp: "wlp-integration-client")
 
-    let whitelabel = WhitelabelPay.configure(with: configuration)
+    let whitelabel = try WhitelabelPay(config: configuration)
 
     // The instance has to be stored by the host app for future use.
 
@@ -52,41 +51,58 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 ## Registration
 
-The first step to do after configuring the SDK is to register the device with the backend. To do so, call the async func ``WhitelabelPay/WhitelabelPay/enroll()``. If the enroll process succeeds it will return an onboarding token that can be used at the cashier desk to finalise the onboarding process. This token is also stored on the device for offline use. The type of this token will always be ``TokenType/onboarding``.
+The first step to do after configuring the SDK is to register the device with the backend. To do so, call the async func ``WhitelabelPay/WhitelabelPay/registerUserDevice()``. If the registration process succeeds the ``WhitelabelPay/WhitelabelPay/isRegistered`` becomes true.
 
-> Tip: This function should only be called if the device is not already registered, in order to check if the device was not already registerd, please use ``WhitelabelPay/WhitelabelPay/isRegistered``
+> Tip: This function should only be called if the device is not already registered, in order to check if the device was already registerd, please use ``WhitelabelPay/WhitelabelPay/isRegistered``
 
 **Throws**: The function throws a ``WhitelabelPayError`` under several scenarios: 
 | Error Type | Description | 
 | --------------------- | --------------------------- |
 | ``WhitelabelPayError/deviceAlreadyRegistered`` | if the device is already registered. |
-| ``WhitelabelPayError/identityRegistrationResponseError`` | if there is an error during registration. |
-| ``WhitelabelPayError/userAlreadyOnboarded`` | if the user is already onboarded. |
-| ``WhitelabelPayError/storeFailure(_:)`` | if there are no tokens to sign, this can happen also if the host app does not have Keychain access (missing entitlements). |
+| ``WhitelabelPayError/identityRegistrationResponseError(_:)`` | if there is an error during registration. |
+| ``WhitelabelPayError/storeFailure(_:)`` | if there are no tokens to sign, this can happen also if the host app does not have Keychain access (missing entitlements). The associated value error will have more details. |
+
+Next step in the Registration process is to request an onboarding ``Token`` via ``WhitelabelPay/WhitelabelPay/getToken(fetchMode:)``. With the token retrieved, you can display it to the user in a way that reflects the onboarding step. The returned ``Token`` type will be of type ``TokenType/onboarding``, if you want to perform an extra check on the type, please access the ``Token/type`` property.
+
+> Note: The onboarding token can be used at the cashier desk to finalise the onboarding process. This token is also stored on the device for offline use. The type of this token will always be ``TokenType/onboarding``.
+
+
+> Tip: This function is used for requestion both onboarding and payment tokens. 
+> Tip: In order to check in which state the onboarding process is, please check the ``WhitelabelPay/WhitelabelPay/isOnboarded`` property.
+
 | ``WhitelabelPayError/registryOnboardingResponseError(_:)`` | if there is any other error during the process. | 
+| ``WhitelabelPayError/userAlreadyOnboarded`` | if the user is already onboarded. |
 
 **Example usage:**
 
 ```swift 
 do {
-   let token = try await whitelabel.enroll()
-    //Initialize UI after enrolment - show enrolment token
+    try await whitelabel.registerUserDevice()
+    
+    // Request an onboarding token.
+    let token = try await whitelabel.getToken()
+    
+    // Generate an aztec image with the signed value of the token.
+    let data = try token.signed.data(using: .utf8)
+    // Draw the aztec code image. 
+
 } catch {
     print("Error during device registration: \(error)")
 }
 ```
 
-
 ## PaymentMeans 
 
-Request the list of payment means by calling ``WhitelabelPay/WhitelabelPay/getPaymentMeans()``.
+Request the list of payment means by calling ``WhitelabelPay/WhitelabelPay/getPaymentMeans(fetchMode:)``.
 
 This function fetches the current list payment means. Currently only one payment means can be active and all the locally stored payment tokens will be part of this active payment means.
 
+The function takes a parameter of type ``WhitelabelPay/FetchMode``, this defines how the logic of retrieving the payment means.
+Use ``WhitelabelPay/FetchMode/fromLocalFirst`` if you expect to have locally stored payment means and you want to retrieve them without waiting for the network request to finish. The SDK will check first for locally stored payment means and will return them, at the same time it will send a request on a differenct concurrency context to retrieve the most up to date list and will suppress any errors that could be triggered.
+Use ``WhitelabelPay/FetchMode/network``, if you want to always make sure you retrieve the most up to date list, this will send a request to the server and will wait for the server response.
+
 > Tip:  Note that the device must be registered before any payment means 
 can be retrieved otherwise it will throw a ``WhitelabelPayError/deviceNotRegistered``.
-
-> Note: If network connectivity is available, this function fetches the payment means from the network, otherwise, it retrieves them from the local storage.
 
 - term **Returns** : An asynchronous array of ``PaymentMean``.
 
@@ -104,18 +120,18 @@ do {
 
 ## Performing a payment with a signed Token
 
-Retrieve a payment token by calling the async function ``WhitelabelPay/WhitelabelPay/getToken()``
+Retrieve a payment token by calling the async function ``WhitelabelPay/WhitelabelPay/getToken(fetchMode:)``
 
-This function first checks for an active internet connection. If one exists, it fetches fresh tokens for the currently active payment means and removes the previous ones from storage. If no active payment means are found, it fetches an onboarding token. 
+The function takes a parameter of type ``WhitelabelPay/FetchMode``, this defines how the logic of retrieving the token.
+Use ``WhitelabelPay/FetchMode/fromLocalFirst`` if you expect to have locally stored tokens and you want to retrieve one without waiting for the network request to finish. The SDK will check first for locally stored tokens and will return the first one and at the same time it will send a request on a differenct concurrency context and will suppress any potential network errors. 
+Use ``WhitelabelPay/FetchMode/network``, if you want to always make sure you retrieve the most fresh token, this will send a request to the server and will wait for the server response. Scenario: Use this option if the user did not perform a payment in a longer period of time. 
 
 If there is no internet connection and there are locally stored tokens, it will return a signed token from the local storage. 
 
-> Note: Please note that currently there are only 5 tokens stored and when the user is in offline mode, calling `getToken()` multiple times can result in the token storage being emptied. So, keep in mind that requesting a token will automatically remove it from the offline storage even if it was not actually used for payment. This behavior is a bit different when there is an internet connection. If the internet connection is active then the SDK will fetch a new set of tokens each time. 
+> Note: Please note that currently there are only 5 tokens stored and when the user is in offline mode, calling `getToken()` multiple times can result in the token storage being emptied. So, keep in mind that requesting a token will automatically remove it from the offline storage even if it was not actually used for payment.
 
  - term **Returns**: An asynchronous ``Token`` of type ``TokenType/payment`` 
    or ``TokenType/onboarding`` if no payment mean is active.
-
- - term **Throws**: ``WhitelabelPayError/noInternetConnection(_:)`` if there is no active internet connection and there are no stored tokens.
 
  **Example usage:**
 
@@ -196,7 +212,7 @@ This function calls the ``WhitelabelPay/WhitelabelPay/reset()`` method from the 
 
 ```swift
 do {
-    try WhitelabelPay.shared.reset()
+    try whitelabel.reset()
 } catch {
     print("Error during data reset: \(error)")
 }

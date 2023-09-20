@@ -14,6 +14,6 @@ let package = Package(
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
-        .binaryTarget(name: "WhitelabelPaySDK", path: "binary/WhitelabelPaySDK-v1.0.2.zip")
+        .binaryTarget(name: "WhitelabelPaySDK", path: "binary/WhitelabelPaySDK-v1.0.3.zip")
     ]
 )

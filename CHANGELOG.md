@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Released]
 
+## [1.0.3] - 2023-09-08
+
+### Changed 
+- Reimplemented new getToken and getPaymentMeans that skips the need of Network reachability.
+- Added additional parameter to `getToken` and `getPaymentMeans` for more flexibility.
+- Removed static func for configuring `WhitelabelPay` instance.
+- Added public init.
+- Update body for deactivatePaymentMeans.
+- Improved get started article.
+- Removed outdated comments.
+- Updated tests.
+
 ## [1.0.2] - 2023-08-29
 
 ### Changed 
