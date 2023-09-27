@@ -6,7 +6,8 @@ Distribution Wrapper for the paymenttools WhitelabelPay SDK for cash desk paymen
 
 The documentation can be found in the "documentation" folder as a doccarchive.
 
-# Getting started
+# Getting Started with WhitelabelPay
+
 
 The SDK is a convienient wrapper around the White Label Rest API. It provides a way solution to register the user device and store tokens for offline usage.  
 

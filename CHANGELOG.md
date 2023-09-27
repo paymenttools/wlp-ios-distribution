@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Released]
 
+## [1.0.4] - 2023-09-27
+
+### Changed 
+- Fixed reset() func to generate a new subjectId directly.
+- Removed .registryOnboardingResponseError error.
+- More detailed description for some errors.
+
 ## [1.0.3] - 2023-09-08
 
 ### Changed 
