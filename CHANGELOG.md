@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Released]
 
+## [1.0.6]
+## [1.0.5]
+
+### Changed 
+
+- Added public enum 'SDKState' representing the curent status of the SDK - 'active', 'inactive', 'onboarding'.
+- Added 'sync' function to syncronise the SDK with the backend.
+- Support for adding a second or multiple cards.
+- 'fetchOnboardingToken' function made public.
+- Comform to @Sendable protocol
+
 ## [1.0.4] - 2023-09-27
 
 ### Changed 
