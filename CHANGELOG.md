@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Released]
 
+## [1.0.7]
+- Bug fixes and improvements for cache 
+- Update reset() method to be async
+
 ## [1.0.6]
 ## [1.0.5]
 
