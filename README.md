@@ -228,17 +228,18 @@ do {
 ## Migration from 1.0.7 to 1.0.8
 
 1. The main ``WhitelabelPay/Configuration`` structure has the following changes that need to be updated:
-    - 'tenantId' is now an UUID. 
-    - 'referenceId' is also an UUID, we were referring to this one also as notificationID, which is the id that will be passed back via the webhook notifications to the REWE Backend.
+    - 'tenantId' must be a valid UUID, for ease of use we keep the parameter as a String. 
+    - 'referenceId' is String(also a valid UUID), we were referring to this one also as notificationID, which is the id that will be passed back via the webhook notifications to the REWE Backend.
+> Note: Failure to pass valid UUID as a String will result in failure of creating/retrieving an enrolment token. 
 
 2. The Token struct is no longer available, this has been replaced by the ``Token`` protocol which is implemented by both the Onboarding and Payment Tokens. Please use the `stringRepresentation` var from ``Token`` in order to generate the aztec code image.
 
-Because the new onboarding flow is more simple and more secure there is no point in using the same structure for both Onboarding and Payment Tokens. In order to retrieve an onboarding token, please call `getEnrolmentToken()`, it will return a type erased ``Token``, which will work in offline mode and it does not require an internet connection anymore. 
+Because the new onboarding flow is more simple and more secure there is no point in using the same structure for both Onboarding and Payment Tokens. In order to retrieve an onboarding token, please call `getEnrolmentToken()`, it will return a type erased ``Token`` which will work in offline mode and it does not require an internet connection anymore. 
 
 To retrieve a payment token, please use the `getPaymentToken(...)`, this will also return a type erased ``Token``, also use the same `stringRepresentation` var in order to draw your aztec code.
 
 
-3. ``WhitelabelPayError.deviceNotRegistered`` and ```WhitelabelPayError.deviceNotRegistered`` errors have been removed as they are no longer necessary with the new flow.
+3. ``WhitelabelPayError.deviceNotRegistered``, ``WhitelabelPayError.identityAuthorisationFailure`` and ```WhitelabelPayError.deviceNotRegistered`` errors have been removed as they are no longer necessary with the new flow.
 
 - ``WhitelabelPayError.failureToRetrieveToken`` has been renamed to ``WhitelabelPayError.failureToRetrievePaymentToken`` and now it take an optional associated value.
 
@@ -263,8 +264,6 @@ public enum State {
     case active
 }
 ```
-
-
 
 ## Data Collection
 
