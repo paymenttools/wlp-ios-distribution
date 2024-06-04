@@ -229,7 +229,7 @@ do {
 
 1. The main ``WhitelabelPay/Configuration`` structure has the following changes that need to be updated:
     - 'tenantId' must be a valid UUID, for ease of use we keep the parameter as a String. 
-    - 'referenceId' is String(also a valid UUID), we were referring to this one also as notificationID, which is the id that will be passed back via the webhook notifications to the REWE Backend.
+    - 'referenceId' is a String(also a valid UUID), we were referring to this one also as notificationID, which is the id that will be passed back via the webhook notifications to your backend.
 > Note: Failure to pass valid UUID as a String will result in failure of creating/retrieving an enrolment token. 
 
 2. The Token struct is no longer available, this has been replaced by the ``Token`` protocol which is implemented by both the Onboarding and Payment Tokens. Please use the `stringRepresentation` var from ``Token`` in order to generate the aztec code image.
@@ -239,7 +239,7 @@ Because the new onboarding flow is more simple and more secure there is no point
 To retrieve a payment token, please use the `getPaymentToken(...)`, this will also return a type erased ``Token``, also use the same `stringRepresentation` var in order to draw your aztec code.
 
 
-3. ``WhitelabelPayError.deviceNotRegistered``, ``WhitelabelPayError.identityAuthorisationFailure`` and ```WhitelabelPayError.deviceNotRegistered`` errors have been removed as they are no longer necessary with the new flow.
+3. ``WhitelabelPayError.deviceNotRegistered``, ``WhitelabelPayError.identityAuthorisationFailure`` and ```WhitelabelPayError.deviceNotRegistered``` errors have been removed as they are no longer necessary with the new flow.
 
 - ``WhitelabelPayError.failureToRetrieveToken`` has been renamed to ``WhitelabelPayError.failureToRetrievePaymentToken`` and now it take an optional associated value.
 
