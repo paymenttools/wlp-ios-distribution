@@ -224,6 +224,48 @@ do {
 >Warning: When switching the environment please make sure you also call the reset() func. If you miss that the SDK will be in an incositent state that will result in getting authorization errors.  
 
 
+
+## Migration from 1.0.7 to 1.0.8
+
+1. The main ``WhitelabelPay/Configuration`` structure has the following changes that need to be updated:
+    - 'tenantId' is now an UUID. 
+    - 'referenceId' is also an UUID, we were referring to this one also as notificationID, which is the id that will be passed back via the webhook notifications to the REWE Backend.
+
+2. The Token struct is no longer available, this has been replaced by the ``Token`` protocol which is implemented by both the Onboarding and Payment Tokens. Please use the `stringRepresentation` var from ``Token`` in order to generate the aztec code image.
+
+Because the new onboarding flow is more simple and more secure there is no point in using the same structure for both Onboarding and Payment Tokens. In order to retrieve an onboarding token, please call `getEnrolmentToken()`, it will return a type erased ``Token``, which will work in offline mode and it does not require an internet connection anymore. 
+
+To retrieve a payment token, please use the `getPaymentToken(...)`, this will also return a type erased ``Token``, also use the same `stringRepresentation` var in order to draw your aztec code.
+
+
+3. ``WhitelabelPayError.deviceNotRegistered`` and ```WhitelabelPayError.deviceNotRegistered`` errors have been removed as they are no longer necessary with the new flow.
+
+- ``WhitelabelPayError.failureToRetrieveToken`` has been renamed to ``WhitelabelPayError.failureToRetrievePaymentToken`` and now it take an optional associated value.
+
+- ``WhitelabelPayError.identityRegistrationResponseError`` has been renamed to ``WhitelabelPayError.enrollmentError``, this can be thrown by the ``getEnrolmentToken()`` func, with an associated value (This will be thrown if the SDK has no access to the keychain, there should be no other reasons for failure).
+
+4. ``isRegistered`` has been removed from the main WhitelabelPay class, this is no longer needed with the new onboarding flow. Please use the ``WhitelabelPay/state`` property to detect the current state of the SDK. 
+
+Please check the State enum for the possible states the SDK can be. 
+
+```swift
+public enum State {
+    /// The SDK is in the inactive state which means there was no enrolment at any point in time.
+    /// This is the state in which the SDK is after the first initialisation.
+    case inactive
+
+    /// The SDK could have previously onboarded but it currently does not have any active payment means.
+    /// This is usually the case when the user payment means expired or the initial onboarding failed.
+    /// The SDK at this point is registered with the PaymentTools backend and has a subjectId.
+    case onboarding
+
+    /// There is an active payment mean and the user can perform payments with it.
+    case active
+}
+```
+
+
+
 ## Data Collection
 
 PaymentTools SDK does not store or collect personal or app related data other than an unique identifier generated when the SDK is initialized for identification purposes.
