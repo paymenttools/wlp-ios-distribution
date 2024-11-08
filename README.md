@@ -20,7 +20,7 @@ The SDK is a convienient wrapper around the White Label Rest APIs. It provides a
 
 ## Configuration
 
-To instantiate an instance of ``WhitelabelPay`` please use  ``WhitelabelPay/WhitelabelPay/init(config:urlSessionConfiguration:)``. The initializer has also an optional param called `urlSessionConfiguration`, if you need to customize the URLSession, please pass your custom config and WhitelabelPay will use it internally. 
+To instantiate an instance of ``WhitelabelPay`` please use  ``WhitelabelPay/WhitelabelPay(config:urlSessionConfiguration:)``. The initializer has also an optional param called `urlSessionConfiguration`, if you need to customize the URLSession, please pass your custom config and WhitelabelPay will use it internally. 
 
 The ``Configuration`` struc needs tree params:
 - Vendor's **`tenanId`** of type `String`. 
