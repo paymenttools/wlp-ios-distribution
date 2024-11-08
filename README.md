@@ -158,7 +158,7 @@ Fetch payment transactions from the server.
 This function sends an HTTP request to the server to fetch payment transactions. 
  It returns an array of `TransactionDTO` objects, representing payment transactions.
 
- - term **Returns**: An asynchronous array of `TransactionDTO` representing payment transactions.
+ - **Returns**: An asynchronous array of `TransactionDTO` representing payment transactions.
 
 **Example usage**:
 
