@@ -1,0 +1,15 @@
+{
+  "originHash" : "696b85e53e4027d74c00dda77345f4ec7033711d48068351e8a6346880fdaf5e",
+  "pins" : [
+    {
+      "identity" : "wlp-ios-distribution",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/paymenttools/wlp-ios-distribution",
+      "state" : {
+        "branch" : "main",
+        "revision" : "62446beb94b8b20f015cdf458c42368364233bff"
+      }
+    }
+  ],
+  "version" : 3
+}
