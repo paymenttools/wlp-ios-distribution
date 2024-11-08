@@ -3,188 +3,142 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A1479B222A4C312000F95FBE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1479B212A4C312000F95FBE /* AppDelegate.swift */; };
-		A1479B242A4C312000F95FBE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1479B232A4C312000F95FBE /* SceneDelegate.swift */; };
-		A1479B262A4C312000F95FBE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1479B252A4C312000F95FBE /* ViewController.swift */; };
-		A1479B2B2A4C312100F95FBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1479B2A2A4C312100F95FBE /* Assets.xcassets */; };
-		A1479B2E2A4C312100F95FBE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1479B2C2A4C312100F95FBE /* LaunchScreen.storyboard */; };
-		A1479B3B2A4C335A00F95FBE /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A1479B3A2A4C335A00F95FBE /* ViewController.xib */; };
-		E22AE4E72A9F46B4009AAB79 /* WhitelabelPaySDK in Frameworks */ = {isa = PBXBuildFile; productRef = E22AE4E62A9F46B4009AAB79 /* WhitelabelPaySDK */; };
+		A1367C372CDCC391009FDA82 /* WhitelabelPaySDK in Frameworks */ = {isa = PBXBuildFile; productRef = A1367C362CDCC391009FDA82 /* WhitelabelPaySDK */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A1479B1E2A4C312000F95FBE /* BasicSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasicSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A1479B212A4C312000F95FBE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A1479B232A4C312000F95FBE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		A1479B252A4C312000F95FBE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		A1479B2A2A4C312100F95FBE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A1479B2D2A4C312100F95FBE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		A1479B2F2A4C312100F95FBE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A1479B3A2A4C335A00F95FBE /* ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
-		A1C063962A4C554300B381B4 /* wlp-ios-sdk */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "wlp-ios-sdk"; path = ../..; sourceTree = "<group>"; };
+		A1367C1B2CDCC343009FDA82 /* WhitelabelPay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhitelabelPay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		A1367C1D2CDCC343009FDA82 /* WhitelabelPay */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = WhitelabelPay;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
-		A1479B1B2A4C312000F95FBE /* Frameworks */ = {
+		A1367C182CDCC343009FDA82 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E22AE4E72A9F46B4009AAB79 /* WhitelabelPaySDK in Frameworks */,
+				A1367C372CDCC391009FDA82 /* WhitelabelPaySDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A1479B152A4C312000F95FBE = {
+		A1367C122CDCC343009FDA82 = {
 			isa = PBXGroup;
 			children = (
-				A1C063952A4C554300B381B4 /* Packages */,
-				A1479B202A4C312000F95FBE /* BasicSample */,
-				A1479B1F2A4C312000F95FBE /* Products */,
-				A1479B372A4C327C00F95FBE /* Frameworks */,
+				A1367C1D2CDCC343009FDA82 /* WhitelabelPay */,
+				A1367C1C2CDCC343009FDA82 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		A1479B1F2A4C312000F95FBE /* Products */ = {
+		A1367C1C2CDCC343009FDA82 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A1479B1E2A4C312000F95FBE /* BasicSample.app */,
+				A1367C1B2CDCC343009FDA82 /* WhitelabelPay.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		A1479B202A4C312000F95FBE /* BasicSample */ = {
-			isa = PBXGroup;
-			children = (
-				A1479B212A4C312000F95FBE /* AppDelegate.swift */,
-				A1479B232A4C312000F95FBE /* SceneDelegate.swift */,
-				A1479B252A4C312000F95FBE /* ViewController.swift */,
-				A1479B3A2A4C335A00F95FBE /* ViewController.xib */,
-				A1479B2A2A4C312100F95FBE /* Assets.xcassets */,
-				A1479B2C2A4C312100F95FBE /* LaunchScreen.storyboard */,
-				A1479B2F2A4C312100F95FBE /* Info.plist */,
-			);
-			path = BasicSample;
-			sourceTree = "<group>";
-		};
-		A1479B372A4C327C00F95FBE /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		A1C063952A4C554300B381B4 /* Packages */ = {
-			isa = PBXGroup;
-			children = (
-				A1C063962A4C554300B381B4 /* wlp-ios-sdk */,
-			);
-			name = Packages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A1479B1D2A4C312000F95FBE /* BasicSample */ = {
+		A1367C1A2CDCC343009FDA82 /* WhitelabelPay */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A1479B322A4C312100F95FBE /* Build configuration list for PBXNativeTarget "BasicSample" */;
+			buildConfigurationList = A1367C292CDCC344009FDA82 /* Build configuration list for PBXNativeTarget "WhitelabelPay" */;
 			buildPhases = (
-				A1479B1A2A4C312000F95FBE /* Sources */,
-				A1479B1B2A4C312000F95FBE /* Frameworks */,
-				A1479B1C2A4C312000F95FBE /* Resources */,
+				A1367C172CDCC343009FDA82 /* Sources */,
+				A1367C182CDCC343009FDA82 /* Frameworks */,
+				A1367C192CDCC343009FDA82 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = BasicSample;
-			packageProductDependencies = (
-				E22AE4E62A9F46B4009AAB79 /* WhitelabelPaySDK */,
+			fileSystemSynchronizedGroups = (
+				A1367C1D2CDCC343009FDA82 /* WhitelabelPay */,
 			);
-			productName = WhiteLabelPay;
-			productReference = A1479B1E2A4C312000F95FBE /* BasicSample.app */;
+			name = WhitelabelPay;
+			packageProductDependencies = (
+				A1367C362CDCC391009FDA82 /* WhitelabelPaySDK */,
+			);
+			productName = WhitelabelPay;
+			productReference = A1367C1B2CDCC343009FDA82 /* WhitelabelPay.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		A1479B162A4C312000F95FBE /* Project object */ = {
+		A1367C132CDCC343009FDA82 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastSwiftUpdateCheck = 1610;
+				LastUpgradeCheck = 1610;
 				TargetAttributes = {
-					A1479B1D2A4C312000F95FBE = {
-						CreatedOnToolsVersion = 14.3.1;
+					A1367C1A2CDCC343009FDA82 = {
+						CreatedOnToolsVersion = 16.1;
 					};
 				};
 			};
-			buildConfigurationList = A1479B192A4C312000F95FBE /* Build configuration list for PBXProject "BasicSample" */;
-			compatibilityVersion = "Xcode 14.0";
+			buildConfigurationList = A1367C162CDCC343009FDA82 /* Build configuration list for PBXProject "WhitelabelPay" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = A1479B152A4C312000F95FBE;
-			productRefGroup = A1479B1F2A4C312000F95FBE /* Products */;
+			mainGroup = A1367C122CDCC343009FDA82;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A1367C352CDCC391009FDA82 /* XCRemoteSwiftPackageReference "wlp-ios-distribution" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = A1367C1C2CDCC343009FDA82 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A1479B1D2A4C312000F95FBE /* BasicSample */,
+				A1367C1A2CDCC343009FDA82 /* WhitelabelPay */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		A1479B1C2A4C312000F95FBE /* Resources */ = {
+		A1367C192CDCC343009FDA82 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1479B2E2A4C312100F95FBE /* LaunchScreen.storyboard in Resources */,
-				A1479B3B2A4C335A00F95FBE /* ViewController.xib in Resources */,
-				A1479B2B2A4C312100F95FBE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		A1479B1A2A4C312000F95FBE /* Sources */ = {
+		A1367C172CDCC343009FDA82 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1479B262A4C312000F95FBE /* ViewController.swift in Sources */,
-				A1479B222A4C312000F95FBE /* AppDelegate.swift in Sources */,
-				A1479B242A4C312000F95FBE /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		A1479B2C2A4C312100F95FBE /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A1479B2D2A4C312100F95FBE /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
-		A1479B302A4C312100F95FBE /* Debug */ = {
+		A1367C272CDCC344009FDA82 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -217,7 +171,8 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -231,20 +186,22 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		A1479B312A4C312100F95FBE /* Release */ = {
+		A1367C282CDCC344009FDA82 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -277,7 +234,8 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -285,35 +243,38 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		A1479B332A4C312100F95FBE /* Debug */ = {
+		A1367C2A2CDCC344009FDA82 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6DSASJ7Z5Z;
+				DEVELOPMENT_ASSET_PATHS = "\"WhitelabelPay/Preview Content\"";
+				DEVELOPMENT_TEAM = WYQJU87AXN;
+				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = BasicSample/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.paymenttools.demo.WhiteLabelPay;
+				PRODUCT_BUNDLE_IDENTIFIER = com.paymenttools.demo.WhitelabelPay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -321,25 +282,28 @@
 			};
 			name = Debug;
 		};
-		A1479B342A4C312100F95FBE /* Release */ = {
+		A1367C2B2CDCC344009FDA82 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6DSASJ7Z5Z;
+				DEVELOPMENT_ASSET_PATHS = "\"WhitelabelPay/Preview Content\"";
+				DEVELOPMENT_TEAM = WYQJU87AXN;
+				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = BasicSample/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.paymenttools.demo.WhiteLabelPay;
+				PRODUCT_BUNDLE_IDENTIFIER = com.paymenttools.demo.WhitelabelPay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -350,32 +314,44 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A1479B192A4C312000F95FBE /* Build configuration list for PBXProject "BasicSample" */ = {
+		A1367C162CDCC343009FDA82 /* Build configuration list for PBXProject "WhitelabelPay" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A1479B302A4C312100F95FBE /* Debug */,
-				A1479B312A4C312100F95FBE /* Release */,
+				A1367C272CDCC344009FDA82 /* Debug */,
+				A1367C282CDCC344009FDA82 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A1479B322A4C312100F95FBE /* Build configuration list for PBXNativeTarget "BasicSample" */ = {
+		A1367C292CDCC344009FDA82 /* Build configuration list for PBXNativeTarget "WhitelabelPay" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A1479B332A4C312100F95FBE /* Debug */,
-				A1479B342A4C312100F95FBE /* Release */,
+				A1367C2A2CDCC344009FDA82 /* Debug */,
+				A1367C2B2CDCC344009FDA82 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		A1367C352CDCC391009FDA82 /* XCRemoteSwiftPackageReference "wlp-ios-distribution" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/paymenttools/wlp-ios-distribution";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
-		E22AE4E62A9F46B4009AAB79 /* WhitelabelPaySDK */ = {
+		A1367C362CDCC391009FDA82 /* WhitelabelPaySDK */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = A1367C352CDCC391009FDA82 /* XCRemoteSwiftPackageReference "wlp-ios-distribution" */;
 			productName = WhitelabelPaySDK;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = A1479B162A4C312000F95FBE /* Project object */;
+	rootObject = A1367C132CDCC343009FDA82 /* Project object */;
 }

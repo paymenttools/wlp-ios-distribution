@@ -66,7 +66,7 @@ class ViewController: UIViewController {
             do {
                 await whitelabel.sync()
 
-                let token = whitelabel.isOnboarded ? try await whitelabel.getPaymentToken() : try whitelabel.getEnrolmentToken()
+				let token = whitelabel.state == .active ? try await whitelabel.getPaymentToken() : try whitelabel.getEnrolmentToken()
                 print("Presenting token: \(try token.stringRepresentation)")
 
                 ivQrCode.image = generateAztecCodeImage(token)
@@ -74,13 +74,13 @@ class ViewController: UIViewController {
                 btnEnroll.setTitle("Get Token", for: .normal)
                 btnRefresh.isHidden = false
                 btnEnroll.isHidden = true
-                btnDeactivateMeans.isHidden = !whitelabel.isOnboarded
+                btnDeactivateMeans.isHidden = whitelabel.state != WhitelabelPayState.active
                 lbTokenCount.text = "Token count: \(whitelabel.availableOfflineTokensCount)"
             } catch {
                 showError(error)
             }
 
-            lbOnboardingStatus.text = whitelabel.isOnboarded ? "Onboarded" : "Not Onboarded"
+            lbOnboardingStatus.text = whitelabel.state == WhitelabelPayState.active ? "Onboarded" : "Not Onboarded"
         }
     }
 
@@ -162,7 +162,7 @@ class ViewController: UIViewController {
 
                 _ = try await whitelabel.getPaymentToken(fetchMode: .network)
 
-                self.showMessage(whitelabel.isOnboarded ? "Onboarded." : "Not onboarded yet.")
+                self.showMessage(whitelabel.state == WhitelabelPayState.active ? "Onboarded." : "Not onboarded yet.")
 
                 self.configureUI()
             } catch {
