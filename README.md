@@ -124,7 +124,6 @@ If there is no internet connection and there are locally stored tokens, it will 
 
 ## Payment Means Deactivation
 
-
 Deactivates an active payment means.
 
  This function sends an HTTP request to the server to deactivate the specified payment means. 
@@ -151,14 +150,13 @@ do {
 }
 ```
 
-### Transactions - available in future versions
+### Transactions.
 
-Fetch payment transactions from the server.
+Fetch payment transactions from the server with ``WhitelabelPay/WhitelabelPay/fetchTransactions()``
 
 This function sends an HTTP request to the server to fetch payment transactions. 
- It returns an array of `TransactionDTO` objects, representing payment transactions.
-
- - **Returns**: An asynchronous array of `TransactionDTO` representing payment transactions.
+ 
+ - **Returns**: It returns a `TransactionResponse` struct, representing the pageable payment transactions.
 
 **Example usage**:
 
@@ -169,8 +167,6 @@ This function sends an HTTP request to the server to fetch payment transactions.
      print("Error during transactions fetching: \(error)")
  }
  ```
-
->Warning: This feature will be available in a future release.
 
 ## Reseting
 
@@ -195,7 +191,6 @@ do {
 ## Environments
     
 >Warning: When switching the environment please make sure you also call the reset() func. If you miss that the SDK will be in an incositent state that will result in getting authorization errors.  
-
 
 ## Migration from 1.0.7 to 1.0.8
 
@@ -234,6 +229,34 @@ public enum State {
 
     /// There is an active payment mean and the user can perform payments with it.
     case active
+}
+```
+
+## Push Notifications
+
+Currently if there is a notification forwarded to the SDK, it will react to these 3 notification types: Payment Succeeded, Enrolment Succeeded, Payment Failed.
+
+Examples of how a Push Notification thats forwarded to the SDK would look like:
+
+
+```json
+{
+	"aps": {},
+	"yp-type": "enrolment-succeeded.v1"
+}
+```
+
+```json
+{
+	"aps": {},
+	"yp-type": "enrolment-succeeded.v1"
+}
+```
+
+```json
+{
+	"aps": {},
+	"yp-type": "payment-failed.v1"
 }
 ```
 
