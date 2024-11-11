@@ -156,12 +156,12 @@ Fetch payment transactions from the server with ``WhitelabelPay/WhitelabelPay/fe
 
 This function sends an HTTP request to the server to fetch payment transactions. 
 
-- Parameters:
+Parameters:
 - `page`of type ``Int`` representing the current page defaults to 1
 - `size`of type ``Int`` representing the number of items on a page , defaults to 20
 - `sort`of type ``String`` sorting criteria in the format: property(,asc|desc). Default is ascending. Multiple sort criteria are supported.
  
- - **Returns**: It returns a `TransactionResponse` struct, representing the pageable payment transactions.
+**Returns**: It returns a `TransactionResponse` struct, representing the pageable payment transactions.
 
 **Example usage**:
 
