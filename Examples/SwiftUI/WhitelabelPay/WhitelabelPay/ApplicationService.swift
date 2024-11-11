@@ -47,9 +47,8 @@ extension ApplicationService: UIApplicationDelegate, ObservableObject {
         UserDefaults.standard.set(token, forKey: "pushToken")
         UserDefaults.standard.synchronize()
 
-//        Task {
-//            try? await DemoUserService.shared.register(withPushToken: token)
-//        }
+		// Send the token to the backend.
+		
     }
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
