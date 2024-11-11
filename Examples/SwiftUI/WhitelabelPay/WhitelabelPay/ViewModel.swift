@@ -34,13 +34,9 @@ class ViewModel: ObservableObject {
 					self?.objectWillChange.send()
 
 					if let token, let string = try? token.stringRepresentation {
-						print(string)
-
 						self?.token = "REWEDTP#RPay" + string
 						self?.whiteLabelToken = token
 						self?.status = token.type == .onboarding ? "Onboarding" : "Active"
-
-						print("REWEDTP#RPay" + string)
 					} else {
 						self?.token = ""
 					}
@@ -51,10 +47,8 @@ class ViewModel: ObservableObject {
 				await whitelabelPay?.sync()
 			}
 		} catch {
-			// Will throw if the app has no access to the keychain.
 			print(error)
 		}
-
 	}
 
 }

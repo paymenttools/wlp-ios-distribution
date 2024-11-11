@@ -11,8 +11,7 @@ import CoreImage.CIFilterBuiltins
 struct ContentView: View {
 
 	@EnvironmentObject var notificationService: NotificationService
-
-	@ObservedObject var viewModel = ViewModel()
+	@EnvironmentObject var viewModel: ViewModel
 
     var body: some View {
         VStack {
