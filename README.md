@@ -39,7 +39,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
                                       environment: .development,
                                       azp: "wlp-integration-client")
 
-    let whitelabel = try WhitelabelPay(config: configuration)
+    let whitelabel = WhitelabelPay(config: configuration)
 
     // The instance has to be stored by the host app for future use.
 
