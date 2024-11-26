@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     
     var whitelabel: WhitelabelPay
 
-    let configuration = Configuration(tenantId: "abc12345-64ce-422d-bcde-371b57b808bb",
+    let configuration = Configuration(tenantId: "rew",
                                       referenceId: "6bac7eea-c120-428d-beb6-910c6f290434",
                                       environment: .integration,
                                       azp: "wlp-integration-client")
@@ -35,7 +35,7 @@ class ViewController: UIViewController {
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         do {
-            whitelabel = try WhitelabelPay(config: configuration)
+            whitelabel = WhitelabelPay(config: configuration)
         } catch {
             fatalError("There is a problem configuring the SDK.")
         }

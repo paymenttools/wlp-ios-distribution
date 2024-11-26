@@ -21,8 +21,8 @@ class ViewModel: ObservableObject {
 
 	init() {
 		do {
-			self.whitelabelPay = try WhitelabelPay(config: .init(
-				tenantId: "abc12345-64ce-422d-bcde-371b57b808bb",
+			self.whitelabelPay = WhitelabelPay(config: .init(
+				tenantId: "rew",
 				referenceId: UUID().uuidString,
 				environment: .integration,
 				azp: "wlp-production-client"
