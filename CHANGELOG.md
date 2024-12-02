@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Released]
 
+## [1.0.11]
+- Added payment means deletion feature ``.
+- Added payment feature reason field inside `Transaction`.
+
+## [1.0.10]
+- All Errors now conform to LocalizedError.
+- WhitelabelPay init is now non throwable.
+- TenantId is now only a 3 character string.
+
+## [1.0.9]
+- Function getEnrolmentToken() is now synchronous. Async/await is not required anymore as the token is created locally.
+- Function registerUserDevice() has been removed as its no longer needed.
+- Function fetchNotifications() has been removed. Please use fetchTransactions instead.
+- Introduced a new token Pushed var that can be observed for token changes, it will automatically reflect the transition between onboarding/inactive to active state.
+- Added function fetchTransactions for fetching transactions.
+- Updated internal endpoints (Fixes the hostname issue).
+
 ## [1.0.7]
 - Bug fixes and improvements for cache 
 - Update reset() method to be async
