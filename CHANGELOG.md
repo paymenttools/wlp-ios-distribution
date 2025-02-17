@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Released]
 
+## [1.0.13]
+- Added Swift 6 concurrency improvements.
+- Added improved support for UIApplication.shared.isProtectedDataAvailable.
+
+## [1.0.12]
+- Added timestamp in the payment tokens.
+
 ## [1.0.11]
 - Added payment means deletion feature ``.
 - Added payment feature reason field inside `Transaction`.
