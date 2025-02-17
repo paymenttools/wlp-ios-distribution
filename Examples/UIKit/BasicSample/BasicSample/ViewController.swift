@@ -34,12 +34,7 @@ class ViewController: UIViewController {
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        do {
-            whitelabel = WhitelabelPay(config: configuration)
-        } catch {
-            fatalError("There is a problem configuring the SDK.")
-        }
-
+		self.whitelabel = WhitelabelPay(config: configuration)
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
