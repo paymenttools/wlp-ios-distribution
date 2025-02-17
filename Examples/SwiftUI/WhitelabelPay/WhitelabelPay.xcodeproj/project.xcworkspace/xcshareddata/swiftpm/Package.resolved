@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/paymenttools/wlp-ios-distribution",
       "state" : {
-        "revision" : "559d1561e8f6e508295399ce313186b3e7828145",
-        "version" : "1.0.9"
+        "revision" : "502e369ac84e2a8f4f297c2014b73d0b01424173",
+        "version" : "1.0.13"
       }
     }
   ],

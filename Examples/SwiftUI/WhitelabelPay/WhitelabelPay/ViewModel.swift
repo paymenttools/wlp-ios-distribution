@@ -9,9 +9,10 @@ import SwiftUI
 import WhitelabelPaySDK
 import Combine
 
+@MainActor
 class ViewModel: ObservableObject {
 
-	var whitelabelPay: WhitelabelPay?
+	var whitelabelPay: WhitelabelPay
 
 	@Published var token = ""
 	@Published var whiteLabelToken: Token?
@@ -20,34 +21,30 @@ class ViewModel: ObservableObject {
 	private var cancellables = Set<AnyCancellable>()
 
 	init() {
-		do {
-			self.whitelabelPay = WhitelabelPay(config: .init(
-				tenantId: "rew",
-				referenceId: UUID().uuidString,
-				environment: .integration,
-				azp: "wlp-production-client"
-			))
+		self.whitelabelPay = WhitelabelPay(config: Configuration(
+			tenantId: "rew",
+			referenceId: UUID().uuidString,
+			environment: .integration,
+			azp: "wlp-production-client"
+		))
 
-			whitelabelPay?.$token
-				.receive(on: DispatchQueue.main)
-				.sink { [weak self] token in
-					self?.objectWillChange.send()
+		whitelabelPay.$token
+			.receive(on: DispatchQueue.main)
+			.sink { [weak self] token in
+				self?.objectWillChange.send()
 
-					if let token, let string = try? token.stringRepresentation {
-						self?.token = "REWEDTP#RPay" + string
-						self?.whiteLabelToken = token
-						self?.status = token.type == .onboarding ? "Onboarding" : "Active"
-					} else {
-						self?.token = ""
-					}
+				if let token, let string = try? token.stringRepresentation {
+					self?.token = "REWEDTP#RPay" + string
+					self?.whiteLabelToken = token
+					self?.status = token.type == .onboarding ? "Onboarding" : "Active"
+				} else {
+					self?.token = ""
 				}
-				.store(in: &cancellables)
-
-			Task {
-				await whitelabelPay?.sync()
 			}
-		} catch {
-			print(error)
+			.store(in: &cancellables)
+
+		Task {
+			_ = await whitelabelPay.sync()
 		}
 	}
 
