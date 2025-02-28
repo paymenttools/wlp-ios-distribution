@@ -57,7 +57,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 ```swift 
 do {    
     // Request an onboarding token.
-    let token = try await whitelabel.getEnrolmentToken()
+    let token = try whitelabel.getEnrolmentToken()
     
     // Generate an aztec image with the signed token.
     let data = try token.stringRepresentation.data(using: .utf8)
@@ -91,32 +91,24 @@ do {
 }
 ```
 
-## Performing a payment
+## Performing a payment with a Token
 
-Retrieve a payment token by calling the async function ``WhitelabelPay/WhitelabelPay/getPaymentToken(fetchMode:)``
+Retrieve a payment token by calling the function ``WhitelabelPaySDK/WhitelabelPay/getPaymentToken()``
 
-The function takes a parameter of type ``WhitelabelPay/FetchMode``, which defines how fetching the payment token works.
-Use ``WhitelabelPay/FetchMode/fromLocalFirst`` if you expect to have locally stored tokens and you want to retrieve one without waiting for the network request to finish. The SDK will check first for locally stored tokens and will return the first one and at the same time it will send a request on a differenct concurrency context and will suppress any potential network errors. 
-Use ``WhitelabelPay/FetchMode/network``, if you want to always make sure you retrieve the most fresh token, this will send a request to the server and will wait for the server response. Scenario: Use this option if the user did not perform a payment in a longer period of time. 
+If there is no internet connection the SDK will be able to mint tokens locally. Please note there is a limit of how many tokens can be minted locally in offline mode, use ``WhitelabelPaySDK/WhitelabelPay/availableOfflineTokensCount`` to get the remaining tokens that can be minted in offline mode. 
 
-If there is no internet connection and there are locally stored tokens, it will return a signed token from the local storage. 
-
-> Note: Please note that currently there are only 5 tokens stored and when the user is in offline mode, calling `getToken()` multiple times can result in the token storage being emptied. So, keep in mind that requesting a token will automatically remove it from the offline storage even if it was not actually used for payment.
-
- - term **Returns**: An asynchronous ``Token`` of type ``TokenType/payment``.
+ - term **Returns**: A ``Token`` of type ``TokenType/payment``
 
  **Example usage:**
 
  ```swift
  do {
-     let token = try await whitelabel.getPaymentToken()
+     let token = try whitelabel.getPaymentToken()
 
     // Generate an aztec image with the signed value of the token.
-    let data = try token.stringRepresentation.data(using: .utf8)
-    
-    // Generate the aztec code image. 
+    let data = try token.stringRepresentation
+    // Draw the aztec code image. 
     ...
-    
  } catch {
      print("Error during token fetching: \(error)")
  }
@@ -187,7 +179,7 @@ This function calls the ``WhitelabelPay/WhitelabelPay/reset()`` method from the 
 
 ```swift
 do {
-    try whitelabel.reset()
+    try await whitelabel.reset()
 } catch {
     print("Error during data reset: \(error)")
 }
