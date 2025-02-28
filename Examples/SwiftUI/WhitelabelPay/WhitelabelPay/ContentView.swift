@@ -6,25 +6,48 @@
 //
 
 import SwiftUI
+import WhitelabelPaySDK
 import CoreImage.CIFilterBuiltins
 
 struct ContentView: View {
 
 	@EnvironmentObject var notificationService: NotificationService
-	@EnvironmentObject var viewModel: ViewModel
+
+	@StateObject var whitelabelPay = WhitelabelPay(config: Configuration(
+		tenantId: "rew",
+		referenceId: UUID().uuidString,
+		environment: .integration,
+		azp: "wlp-production-client"
+	))
 
     var body: some View {
         VStack {
-			AztecCodeView(token: viewModel.token)
-			Text(viewModel.status)
+			AztecCodeView(token: whitelabelPay.token)
+			switch whitelabelPay.state {
+				case .inactive: Text("Inactive")
+				case .active: Text("Active")
+				case .onboarding: Text("Onboarding")
+			}
         }
         .padding()
+		.onAppear {
+			whitelabelPay.startMonitoringUpdates { error in
+				print(error)
+			}
+		}
+		.onDisappear {
+			whitelabelPay.stopMonitoringUpdates()
+		}
+		.task {
+			// Just make sure we have the most up to date state.
+			await whitelabelPay.sync()
+		}
     }
 }
 
 struct AztecCodeView: View {
 
-	var token: String
+	var token: (any Token)?
 
 	var body: some View {
 		Group {
@@ -41,10 +64,17 @@ struct AztecCodeView: View {
 		.padding()
 	}
 
-	private func generateAztecCode(with text: String) -> Image {
+	private func generateAztecCode(with token: (any Token)?) -> Image {
+		print((try? token?.stringRepresentation) ?? "no token")
+
+		guard let stringRepresentation = try? token?.stringRepresentation else {
+			return Image("qr-code2").resizable()
+		}
+		
+		let tokenString = "REWEDTP#RPay" + stringRepresentation
 		let context = CIContext()
 		let filter = CIFilter.aztecCodeGenerator()
-		filter.setValue(Data(text.utf8), forKey: "inputMessage")
+		filter.setValue(Data(tokenString.utf8), forKey: "inputMessage")
 		let transform = CGAffineTransform(scaleX: 10, y: 10)
 
 		if let outputImage = filter.outputImage?.transformed(by: transform),
@@ -52,8 +82,7 @@ struct AztecCodeView: View {
 			return Image(decorative: cgImage, scale: 1.0, orientation: .up)
 		}
 
-		return Image("qr-code2")
-			.resizable()
+		return Image("qr-code2").resizable()
 	}
 }
 

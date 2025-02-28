@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -13,7 +13,6 @@
             <connections>
                 <outlet property="btnDeactivateMeans" destination="hZh-Vt-OHA" id="Whh-nY-Cah"/>
                 <outlet property="btnEnroll" destination="I3n-5V-t0f" id="cmj-O4-Wfd"/>
-                <outlet property="btnRefresh" destination="qh6-CR-no9" id="WW8-LI-rm8"/>
                 <outlet property="ivQrCode" destination="tfV-jL-Eo2" id="2Wv-2Z-FSi"/>
                 <outlet property="lbOnboardingStatus" destination="dsn-3c-3qX" id="M3L-yw-8NZ"/>
                 <outlet property="lbTokenCount" destination="5Ef-ve-jjg" id="3pZ-hP-tNb"/>
@@ -75,14 +74,6 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qh6-CR-no9">
-                    <rect key="frame" x="171.66666666666666" y="522.66666666666663" width="49.666666666666657" height="34.333333333333371"/>
-                    <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" image="arrow.counterclockwise.circle.fill" catalog="system"/>
-                    <connections>
-                        <action selector="didTouchRefreshButton:" destination="-1" eventType="touchUpInside" id="EDJ-if-yxB"/>
-                    </connections>
-                </button>
                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8MC-0v-u66">
                     <rect key="frame" x="36.666666666666657" y="85" width="319.66666666666674" height="18"/>
                     <subviews>
@@ -110,12 +101,10 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="qh6-CR-no9" firstAttribute="top" secondItem="cjY-fF-PtL" secondAttribute="bottom" constant="24" id="4nt-8F-XTt"/>
                 <constraint firstItem="tfV-jL-Eo2" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="24" id="Bng-qO-XtP"/>
                 <constraint firstItem="8MC-0v-u66" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="JsU-aU-ZHN"/>
                 <constraint firstItem="cjY-fF-PtL" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="LNl-H2-dQF"/>
                 <constraint firstItem="8MC-0v-u66" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="26" id="TCR-aQ-uLi"/>
-                <constraint firstItem="qh6-CR-no9" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="TKY-7V-4Vn"/>
                 <constraint firstItem="cjY-fF-PtL" firstAttribute="top" secondItem="tfV-jL-Eo2" secondAttribute="bottom" constant="8" symbolic="YES" id="V7K-2D-8Ij"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="kbG-Pg-Ase" secondAttribute="trailing" constant="24" id="ZoR-hn-Hh7"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="tfV-jL-Eo2" secondAttribute="trailing" constant="24" id="cSa-12-SfJ"/>
@@ -130,7 +119,6 @@
         </view>
     </objects>
     <resources>
-        <image name="arrow.counterclockwise.circle.fill" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

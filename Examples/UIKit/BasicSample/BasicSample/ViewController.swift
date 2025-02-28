@@ -8,6 +8,7 @@
 import UIKit
 import WhitelabelPaySDK
 import LocalAuthentication
+import Combine
 
 class ViewController: UIViewController {
 
@@ -15,7 +16,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var ivQrCode: UIImageView!
     @IBOutlet weak var lbTokenType: UILabel!
     @IBOutlet weak var lbOnboardingStatus: UILabel!
-    @IBOutlet weak var btnRefresh: UIButton!
     @IBOutlet weak var btnDeactivateMeans: UIButton!
     @IBOutlet weak var lbTokenCount: UILabel!
     
@@ -26,6 +26,8 @@ class ViewController: UIViewController {
                                       environment: .integration,
                                       azp: "wlp-integration-client")
     let context = LAContext()
+
+	var cancellables = Set<AnyCancellable>()
 
     var error: NSError?
 
@@ -53,31 +55,48 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        configureUI()
+		setup()
+
+		whitelabel.startMonitoringUpdates { error in
+			print(error)
+		}
     }
 
-    func configureUI() {
+	override func viewDidDisappear(_ animated: Bool) {
+		super.viewDidDisappear(animated)
+
+		whitelabel.stopMonitoringUpdates()
+	}
+
+    func setup() {
+		whitelabel.$token
+			.receive(on: DispatchQueue.main)
+			.sink { [weak self] token in
+				if let token {
+					try? self?.configureWithToken(token)
+				}
+			}
+			.store(in: &cancellables)
+
         Task {
-            do {
-                await whitelabel.sync()
-
-				let token = whitelabel.state == .active ? try await whitelabel.getPaymentToken() : try whitelabel.getEnrolmentToken()
-                print("Presenting token: \(try token.stringRepresentation)")
-
-                ivQrCode.image = generateAztecCodeImage(token)
-                lbTokenType.text = (token.type == .onboarding) ? "Onboarding token" : "Payment token"
-                btnEnroll.setTitle("Get Token", for: .normal)
-                btnRefresh.isHidden = false
-                btnEnroll.isHidden = true
-                btnDeactivateMeans.isHidden = whitelabel.state != WhitelabelPayState.active
-                lbTokenCount.text = "Token count: \(whitelabel.availableOfflineTokensCount)"
-            } catch {
-                showError(error)
-            }
-
-            lbOnboardingStatus.text = whitelabel.state == WhitelabelPayState.active ? "Onboarded" : "Not Onboarded"
+			await whitelabel.sync()
         }
     }
+
+	func configureWithToken(_ token: any Token) throws {
+		let token = whitelabel.state == .active ? try whitelabel.getPaymentToken() : try whitelabel.getEnrolmentToken()
+
+		print("Presenting token: \(try token.stringRepresentation)")
+
+		ivQrCode.image = generateAztecCodeImage(token)
+		lbTokenType.text = (token.type == .onboarding) ? "Onboarding token" : "Payment token"
+		btnEnroll.setTitle("Get Token", for: .normal)
+		btnEnroll.isHidden = true
+		btnDeactivateMeans.isHidden = whitelabel.state != WhitelabelPayState.active
+		lbTokenCount.text = "Offline tokens limit: \(whitelabel.availableOfflineTokensCount)"
+		lbOnboardingStatus.text = whitelabel.state == .active ? "Onboarded" : "Not Onboarded"
+	}
+
 
     func showError(_ error: Error) {
         var errroMessage = error.localizedDescription
@@ -154,34 +173,22 @@ class ViewController: UIViewController {
         Task {
             do {
                 await whitelabel.sync()
-
-                _ = try await whitelabel.getPaymentToken(fetchMode: .network)
-
                 self.showMessage(whitelabel.state == WhitelabelPayState.active ? "Onboarded." : "Not onboarded yet.")
-
-                self.configureUI()
             } catch {
                 self.showError(error)
             }
         }
     }
 
-    @IBAction func didTouchRefreshButton(_ sender: Any) {
-        configureUI()
-    }
 
     @IBAction func didTouchResetButton(_ sender: Any) {
         Task {
             do {
                 try await whitelabel.reset()
-
-                // Configure the SDK again.
-                //whitelabel = try WhitelabelPay(config: configuration)
+				whitelabel.startMonitoringUpdates()
             } catch {
                 print(error)
             }
-            
-            self.configureUI()
         }
 
     }

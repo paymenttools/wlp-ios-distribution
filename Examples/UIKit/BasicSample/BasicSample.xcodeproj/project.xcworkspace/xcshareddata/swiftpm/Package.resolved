@@ -1,13 +1,13 @@
 {
-  "originHash" : "696b85e53e4027d74c00dda77345f4ec7033711d48068351e8a6346880fdaf5e",
+  "originHash" : "2d806f10166dbeca3f435c7527214baa13bda2adbfed58a95fa61d981726bc95",
   "pins" : [
     {
-      "identity" : "wlp-ios-distribution",
+      "identity" : "swiftlintplugins",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/paymenttools/wlp-ios-distribution",
+      "location" : "https://github.com/SimplyDanny/SwiftLintPlugins",
       "state" : {
-        "revision" : "502e369ac84e2a8f4f297c2014b73d0b01424173",
-        "version" : "1.0.13"
+        "revision" : "7a3d77f3dd9f91d5cea138e52c20cfceabf352de",
+        "version" : "0.58.2"
       }
     }
   ],

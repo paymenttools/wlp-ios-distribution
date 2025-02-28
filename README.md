@@ -197,6 +197,14 @@ do {
     
 >Warning: When switching the environment please make sure you also call the reset() func. If you miss that the SDK will be in an incositent state that will result in getting authorization errors.  
 
+## Migration from 1.0.13 to 1.1.0
+
+1. The main change in the 1.1.0 version is the introduction of the ``WhitelabelPay/startMonitoringUpdates(_:)`` and ``WhitelabelPay/stopMonitoringUpdates()`` which allows the SDK to start monitoring for changes to its state and at the same time, mint payment tokens in case the user is enrolled and has at least one active payment means. Make sure to call these functions when the view that displays the aztec code appears and dissapears. At the moment, the ``WhitelabelPay/startMonitoringUpdates(_:)`` function takes a closure as a parameter which reports the ``WhitelabelPayError/offlineTokenLimitReached`` error in case the device is offline and is has reached the offline token minting limit. 
+
+2. ``WhitelabelPayError/missingSubjectId`` error has been renamed to ``WhitelabelPayError/deviceNotEnrolled`` to better reflect the issue when this error is thrown.
+
+3. ``WhitelabelPayError/failedToFetchPaymentToken`` error has been removed as the SDK no longer fetches payment tokens from the backend. 
+
 ## Migration from 1.0.7 to 1.0.8
 
 1. The main ``WhitelabelPay/Configuration`` structure has the following changes that need to be updated:
