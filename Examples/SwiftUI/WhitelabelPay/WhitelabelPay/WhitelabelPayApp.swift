@@ -14,13 +14,10 @@ struct WhitelabelPayApp: App {
 
 	@StateObject var notificationService = NotificationService()
 
-	@ObservedObject var viewModel = ViewModel()
-
 	var body: some Scene {
         WindowGroup {
             ContentView()
 				.environmentObject(notificationService)
-				.environmentObject(viewModel)
         }
     }
 }
