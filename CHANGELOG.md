@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Released]
 
+## [1.1.5]
+- Implemented logging and exporting of logs.
+
+## [1.1.4]
+- Improved offline mode support.
+- Last minted token will be available even in offline mode.
+
+## [1.1.3]
+- Improved multithreading support.
+
+## [1.1.2]
+- Removed @mainactor annotation from main class init.
+
+## [1.1.1]
+- Removed MainActor requirement for the main class.
+
+## [1.1.0]
+- Local Minting of Tokens.
+- WhitelabelPay is now bound to @MainActor.
+- Introduced startMonitoringUpdates() and stopMonitoringUpdates() functions to start internal polling and minting of payment tokens. Call them when the View that displays the aztec code (onAppear) and when the View is dismissed (onDissapear).
+- WhitelabelPay.availableOfflineTokensCount now represents the amount of tokens that can still be minted locally in offline mode.
+- BREAKING CHANGE: WhitelabelPayError. missingSubjectId has been renamed to WhitelabelPayError.deviceNotEnrolled  to more clearly describe the error.
+- REMOVED: WhitelabelPayError. failedToFetchPaymentToken  has been removed as its not longer needed.
+- FIX: Fixed bug with accessing UIApplication.shared.isProtectedDataAvailable from the MainActor in a SwiftUI app.
+
 ## [1.0.13]
 - Added Swift 6 concurrency improvements.
 - Added improved support for UIApplication.shared.isProtectedDataAvailable.
