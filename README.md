@@ -185,6 +185,29 @@ do {
 }
 ```
 
+## Exporting Logs
+
+In order to export the logs, use the ``WhitelabelPaySDK/WhitelabelPay/exportLogs()`` function. 
+
+>Tip: In order for the SDK to save logs, you must initialise the SDK with the `WhitelabelPaySDK/Configuration/debug` option set to true.
+
+```swift 
+    guard let subjectId = viewModel.whitelabelPay.subjectId else { return nil }
+
+    do {
+        let logsData = try viewModel.whitelabelPay.exportLogs()
+
+        let tempDir = FileManager.default.temporaryDirectory
+        let tempFileURL = tempDir.appendingPathComponent("YP-Logs-\(subjectId.uuidString).log")
+
+        try logsData.write(to: tempFileURL)
+
+        // Export the file saved at tempFileURL.
+    } catch {
+        print(error)
+    }
+```
+
 ## Environments
     
 >Warning: When switching the environment please make sure you also call the reset() func. If you miss that the SDK will be in an incositent state that will result in getting authorization errors.  
