@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Released]
 
+## [1.1.6]
+- Added setReferenceId() func to update the referenceId.
+- Introduced WhitelabelPayError.missingReferenceId thats thrown when trying to create an onboarding token without a reference Id configured.
+- Renamed WhitelabelPayError.enrollmentError to  WhitelabelPayError.enrollmentTokenError
+
 ## [1.1.5]
 - Implemented logging and exporting of logs.
 
