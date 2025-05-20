@@ -14,11 +14,13 @@ struct ContentView: View {
 	@EnvironmentObject var notificationService: NotificationService
 
 	@StateObject var whitelabelPay = WhitelabelPay(config: Configuration(
-		tenantId: "rew",
+		tenantId: "abc",
 		referenceId: UUID().uuidString,
 		environment: .integration,
 		azp: "wlp-production-client"
 	))
+
+	@State var showEnrolmentError: Bool = false
 
     var body: some View {
         VStack {
@@ -27,12 +29,21 @@ struct ContentView: View {
 				case .inactive: Text("Inactive")
 				case .active: Text("Active")
 				case .onboarding: Text("Onboarding")
+				@unknown default:
+					fatalError()
 			}
         }
         .padding()
 		.onAppear {
 			whitelabelPay.startMonitoringUpdates { error in
-				print(error)
+				Task { @MainActor in
+
+					if case WhitelabelPayError.invalidEnrolmentInstance = error {
+						self.showEnrolmentError = true
+					}
+					print(error)
+
+				}
 			}
 		}
 		.onDisappear {
@@ -41,6 +52,14 @@ struct ContentView: View {
 		.task {
 			// Just make sure we have the most up to date state.
 			await whitelabelPay.sync()
+		}
+		.alert("Invalid enrolment detected. Please reset and enroll again.", isPresented: $showEnrolmentError) {
+			Button("OK", role: .cancel) { }
+			Button("Reset", role: .destructive) {
+				Task {
+					try? await whitelabelPay.reset()
+				}
+			}
 		}
     }
 }
