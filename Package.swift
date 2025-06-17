@@ -16,21 +16,14 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/andyzaharia/faro-otel-swift-exporter", branch: "main"),
-//		.package(url: "https://github.com/apple/swift-nio.git", .upToNextMajor(from: "2.17.0")),
-//		.package(url: "https://github.com/apple/swift-docc-plugin.git", .upToNextMajor(from: "1.0.0")),
-//		.package(url: "https://github.com/paymenttools/wlp-enroll-kit.git", branch: "main"),
-//		.package(url: "https://github.com/open-telemetry/opentelemetry-swift.git", .upToNextMinor(from: "1.16.0")),
     ],
     targets: [
-		.binaryTarget(name: "WhitelabelPaySDK", path: "binary/WhitelabelPaySDK-v1.1.21.zip"),
+		.binaryTarget(name: "WhitelabelPaySDK", path: "binary/WhitelabelPaySDK-v1.1.22.zip"),
 		.target(
 			name: "WLP",
 			dependencies: [
 				.target(name: "WhitelabelPaySDK"),
-//				.product(name: "OpenTelemetryApi", package: "opentelemetry-swift"),
-//				.product(name: "OpenTelemetrySdk", package: "opentelemetry-swift"),
 				.product(name: "FaroOtelExporter", package: "faro-otel-swift-exporter"),
-//				.product(name: "NIO", package: "swift-nio"),
 			]
 		),
     ]
