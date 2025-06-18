@@ -1,13 +1,13 @@
 {
-  "originHash" : "c49fc56fbbf2bc102eae9fd3ebcd2f00fe1c77d247e3e36483bdf66d78bc5217",
+  "originHash" : "5b102aedfc4079dd640acccdef1f2cc0088cf9967ab06e2aa72e7df5a28617d7",
   "pins" : [
     {
       "identity" : "faro-otel-swift-exporter",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/andyzaharia/faro-otel-swift-exporter",
       "state" : {
-        "branch" : "main",
-        "revision" : "8f8c48a3f8a15ab55e2c6dd3b76758fc691cbda9"
+        "revision" : "86623fe2bd215152611a52628663d33dcd1e54b4",
+        "version" : "1.0.0"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/open-telemetry/opentelemetry-swift",
       "state" : {
-        "branch" : "renovate/apple-swift-nio-2.x",
-        "revision" : "073d8f3a33d4aa687d3877150712ac5995417fc4"
+        "revision" : "db75ddbb7069d1e7f7a0ba6849bf55b3d961548a",
+        "version" : "1.16.0"
       }
     },
     {
