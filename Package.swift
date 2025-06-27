@@ -18,7 +18,7 @@ let package = Package(
         .package(url: "https://github.com/andyzaharia/faro-otel-swift-exporter", exact: "1.0.0"),
     ],
     targets: [
-		.binaryTarget(name: "WhitelabelPaySDK", path: "binary/WhitelabelPaySDK-v1.1.24.zip"),
+		.binaryTarget(name: "WhitelabelPaySDK", path: "binary/WhitelabelPaySDK-v1.1.25.zip"),
 		.target(
 			name: "WLP",
 			dependencies: [
