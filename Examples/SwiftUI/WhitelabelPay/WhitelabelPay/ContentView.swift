@@ -16,7 +16,7 @@ struct ContentView: View {
 	@StateObject var whitelabelPay = WhitelabelPay(config: Configuration(
 		tenantId: "abc",
 		referenceId: UUID().uuidString,
-		environment: .integration,
+		environment: .development,
 		azp: "wlp-production-client"
 	))
 

@@ -1,5 +1,5 @@
 {
-  "originHash" : "5b102aedfc4079dd640acccdef1f2cc0088cf9967ab06e2aa72e7df5a28617d7",
+  "originHash" : "071c674293b2d46a37e5a264d798a37e6958a5630accb1e0fb4f81eb40c9a26c",
   "pins" : [
     {
       "identity" : "faro-otel-swift-exporter",
@@ -179,6 +179,15 @@
       "state" : {
         "revision" : "cd1e89816d345d2523b11c55654570acd5cd4c56",
         "version" : "1.24.0"
+      }
+    },
+    {
+      "identity" : "swift-ntp",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-ntp.git",
+      "state" : {
+        "revision" : "32d3c756b0167354a04f87969bc1af0ad6ca7c6a",
+        "version" : "0.3.0"
       }
     },
     {
