@@ -1,5 +1,5 @@
 {
-  "originHash" : "696b85e53e4027d74c00dda77345f4ec7033711d48068351e8a6346880fdaf5e",
+  "originHash" : "556073bb97dcdc35e15d3fc1da38031bd2d06182b3ec2ebdad0a92c9227cbe76",
   "pins" : [
     {
       "identity" : "faro-otel-swift-exporter",
@@ -182,6 +182,15 @@
       }
     },
     {
+      "identity" : "swift-ntp",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-ntp.git",
+      "state" : {
+        "revision" : "32d3c756b0167354a04f87969bc1af0ad6ca7c6a",
+        "version" : "0.3.0"
+      }
+    },
+    {
       "identity" : "swift-numerics",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-numerics.git",
@@ -224,15 +233,6 @@
       "state" : {
         "revision" : "18ff09e6b30e589ed38f90a1af23e193b8ecef8e",
         "version" : "1.1.2"
-      }
-    },
-    {
-      "identity" : "wlp-ios-distribution",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/paymenttools/wlp-ios-distribution",
-      "state" : {
-        "branch" : "main",
-        "revision" : "9a4f250dc1df58dcefbd81627e9f908d52914f8c"
       }
     }
   ],
