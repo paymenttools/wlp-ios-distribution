@@ -1,5 +1,5 @@
 {
-  "originHash" : "556073bb97dcdc35e15d3fc1da38031bd2d06182b3ec2ebdad0a92c9227cbe76",
+  "originHash" : "696b85e53e4027d74c00dda77345f4ec7033711d48068351e8a6346880fdaf5e",
   "pins" : [
     {
       "identity" : "faro-otel-swift-exporter",
@@ -233,6 +233,15 @@
       "state" : {
         "revision" : "18ff09e6b30e589ed38f90a1af23e193b8ecef8e",
         "version" : "1.1.2"
+      }
+    },
+    {
+      "identity" : "wlp-ios-distribution",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/paymenttools/wlp-ios-distribution",
+      "state" : {
+        "branch" : "main",
+        "revision" : "7848f499c7b3c3253b5116f034e282057d6064e3"
       }
     }
   ],
