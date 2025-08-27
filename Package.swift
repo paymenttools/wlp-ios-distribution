@@ -23,7 +23,6 @@ let package = Package(
 			name: "WLP",
 			dependencies: [
 				.target(name: "WhitelabelPaySDK"),
-				.product(name: "FaroOtelExporter", package: "faro-otel-swift-exporter"),
 				.product(name: "NTPClient", package: "swift-ntp")
 			]
 		),
