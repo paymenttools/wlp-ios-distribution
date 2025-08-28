@@ -28,10 +28,17 @@ struct ContentView: View {
 			switch whitelabelPay.state {
 				case .inactive: Text("Inactive")
 				case .active: Text("Active")
+				case .activating: Text("Activating")
 				case .onboarding: Text("Onboarding")
 				@unknown default:
 					fatalError()
 			}
+			Button("Reset", role: .destructive) {
+				Task {
+					try? whitelabelPay.reset()
+				}
+			}
+			.padding()
         }
         .padding()
 		.onAppear {
@@ -57,7 +64,7 @@ struct ContentView: View {
 			Button("OK", role: .cancel) { }
 			Button("Reset", role: .destructive) {
 				Task {
-					try? await whitelabelPay.reset()
+					try? whitelabelPay.reset()
 				}
 			}
 		}
@@ -84,9 +91,9 @@ struct AztecCodeView: View {
 	}
 
 	private func generateAztecCode(with token: (any Token)?) -> Image {
-		print((try? token?.stringRepresentation) ?? "no token")
+		print((token?.stringRepresentation) ?? "no token")
 
-		guard let stringRepresentation = try? token?.stringRepresentation else {
+		guard let stringRepresentation = token?.stringRepresentation else {
 			return Image("qr-code2").resizable()
 		}
 		
@@ -107,4 +114,78 @@ struct AztecCodeView: View {
 
 #Preview {
     ContentView()
+}
+
+
+class MockWLP: WhitelabelPayInterface, ObservableObject {
+
+	var config: Configuration
+
+	var subjectId: UUID?
+
+	var availableOfflineTokensCount: Int
+
+	@Published var state: WhitelabelPayState
+
+	@Published var token: Token?
+
+	required init(config: Configuration, urlSessionConfiguration: URLSessionConfiguration?) {
+		self.config = config
+		self.state = .active
+		self.availableOfflineTokensCount = 1
+	}
+
+	func setReferenceId(_ referenceId: String) {}
+
+	@discardableResult func sync(updateToken: Bool) async -> WhitelabelPayState {
+		return state
+	}
+
+	func startMonitoringUpdates(_ updates: @Sendable @escaping (WhitelabelPayError) -> Void) {}
+
+	func stopMonitoringUpdates() {}
+
+	func reset() throws {}
+
+	func getEnrolmentToken() throws -> any WhitelabelPaySDK.Token {
+		MockToken(type: .onboarding, created: Date(), stringRepresentation: "")
+	}
+
+	func getPaymentToken() throws -> any WhitelabelPaySDK.Token {
+		MockToken(type: .onboarding, created: Date(), stringRepresentation: "")
+	}
+
+	func getPaymentMeans(fetchMode: FetchMode) async throws -> [PaymentMean] {
+		return []
+	}
+
+	func deletePaymentMeans(_ paymentMeanId: String) async throws {}
+
+	func deactivatePaymentMeans(_ paymentMeanId: PaymentMeanId) async throws {}
+
+	func reactivate(_ paymentMeanId: PaymentMeanId) async throws {}
+
+	func handleNotification(userInfo: [AnyHashable: Any]) async {}
+
+	func fetchTransactions(page: Int? = nil, size: Int? = nil, sort: String? = nil) async throws -> TransactionResponse {
+		TransactionResponse.empty()
+	}
+
+	func signOff() async throws {}
+
+	func exportLogs() throws -> Data {
+		Data()
+	}
+
+}
+
+struct MockToken: Token {
+
+	var type: WhitelabelPaySDK.TokenType
+	
+	var created: Date
+	
+	var stringRepresentation: String
+	
+
 }
