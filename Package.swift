@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.1
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -15,8 +15,7 @@ let package = Package(
             name: "WhitelabelPaySDK", targets: ["WLP"]),
     ],
     dependencies: [
-		.package(url: "https://github.com/apple/swift-ntp.git", .upToNextMajor(from: "0.3.0")),
-        .package(url: "https://github.com/andyzaharia/faro-otel-swift-exporter", exact: "1.0.0"),
+		.package(url: "https://github.com/apple/swift-ntp.git", .upToNextMajor(from: "0.3.0"))
     ],
     targets: [
 		.binaryTarget(name: "WhitelabelPaySDK", path: "binary/WhitelabelPaySDK-v1.1.27.zip"),
@@ -24,7 +23,6 @@ let package = Package(
 			name: "WLP",
 			dependencies: [
 				.target(name: "WhitelabelPaySDK"),
-				.product(name: "FaroOtelExporter", package: "faro-otel-swift-exporter"),
 				.product(name: "NTPClient", package: "swift-ntp")
 			]
 		),
