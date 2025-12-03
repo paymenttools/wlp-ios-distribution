@@ -15,10 +15,10 @@ let package = Package(
             name: "WhitelabelPaySDK", targets: ["WLP"]),
     ],
     dependencies: [
-		.package(url: "https://github.com/apple/swift-ntp.git", .upToNextMajor(from: "0.3.0"))
+		.package(url: "https://github.com/apple/swift-ntp.git", exact: "0.3.1")
     ],
     targets: [
-		.binaryTarget(name: "WhitelabelPaySDK", path: "binary/WhitelabelPaySDK-v1.1.28.zip"),
+		.binaryTarget(name: "WhitelabelPaySDK", path: "binary/WhitelabelPaySDK-v1.1.29.zip"),
 		.target(
 			name: "WLP",
 			dependencies: [
