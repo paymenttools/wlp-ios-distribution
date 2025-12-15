@@ -69,6 +69,50 @@ do {
 }
 ```
 
+## Online onboarding (aka Alternative Onboarding)
+
+The online onboarding consists of the following steps. 
+
+1. Triggering the `WhitelabelPaySDK/WhitelabelPay/startOnlineOnboarding()` func in order to initiate the onboarding process. This will register the intent of onboarding with our backend and will prepare everything internally to handle the online onboarding. 
+
+2. Provide the user info details via the `WhitelabelPaySDK/WhitelabelPay/requestOnboardingURL()` func and obtain the redirect URL to our 3rd party provider for importing the user bank account. 
+
+3. Open the provided URL in a web view and listen for the success, failure or abort redirects.. 
+> Tip: Ceck the `WhitelabelPaySDK/WhitelabelPay/requestOnboardingURL()` func documentation.
+
+4. When either the success or failure redirect is triggered, make sure to call the `WhitelabelPaySDK/WhitelabelPay/fetchOnlineOnboardingDetails()` func, that will return a publisher `AnyPublisher<OnboardingFlowDetails, WhitelabelPayError>`, which will report the onboarding status. Subscribe to this publisher and monitor the received value. An example (from the AlternativeOnboarding demo app) can be found bellow.
+
+```swift
+	let publisher = whitelabelPay.fetchOnlineOnboardingDetails()
+	
+	publisher
+	.receive(on: DispatchQueue.main)
+	.sink(receiveCompletion: { completion in
+	switch completion {
+		case .finished:
+			print("Completed.")
+		case .failure(let error):
+			if case WhitelabelPayError.onlineOnboarding(let state, let errorMessage, let error) = error {
+				self.lastOnboardingState = state
+				self.lastOnboardingErrorMessage = error?.description ?? errorMessage
+			}
+	}
+}, receiveValue: { details in
+	self.lastOnboardingState = details.status
+	self.bankAccount = details.account
+
+	if details.status == .completed {
+		// We will display the sepa confirmation screen.
+	}
+})
+.store(in: &cancellables)
+
+```
+When we receive the	`WhitelabelPaySDK/WhitelabelPay/OnboardingFlowDetails` value with the satus `.completed`, that means we will have also the `.account` value populated.
+
+5. From the previous step, we use the `OnboardingFlowDetails.account` value, to create the Sepa Mandate Confirmation UI, which will require the user consent. When the user taps the user consent button, make sure to call the `WhitelabelPaySDK/WhitelabelPay/submitSepaMandateConsent()` func, this will finish the onboarding process and if succesfull it will switch the SDK into an active state.  
+
+
 ## PaymentMeans 
 
 Request the list of payment means by calling ``WhitelabelPay/WhitelabelPay/getPaymentMeans(fetchMode:)``.
