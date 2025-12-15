@@ -7,6 +7,104 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Released]
 
+## [1.2.0]
+- Added alternative onboarding feature. 
+- Added new demo for Alternative Onboarding in the Examples folder.
+- Updated binary to work with Xcode 26.2 & Swift 6.2.3
+
+## [1.1.29]
+- Updated binary to work with Xcode 26.1.1 & Swift 6.2.
+
+## [1.1.28]
+- Updated binary to work with Xcode 26.0.1 & Swift 6.2.
+
+## [1.1.27]
+- Implemented caching of SDK State, the SDK will not need access to the Keychain in order to calculate the state. At startup, if the SDK has access to the UserDefaults, it will fetch the state and will be available immediately.
+- Implemented NTP Client to ensure the payment tokens use the precise timestamp (avoids issues with devices that have an incorrect time).
+- All requests have a custom User Agent.
+- Implemented the new WhitelabelPayState.activating state where the SDK will report that the payment means is currently pending activation. The token publisher will still behave the same way it - was as before. If the SDK state will be .activating, the SDK will push a payment token.
+- Setting the reference id triggers a network requests if the user is enrolled and the SDK is allowed to perform network requests. This ensures the WhitelabelPay backend has the most up to date - reference id for an enrolled user.
+- Suppressed URLSession errors in startMonitoringUpdates() func.
+- Removed the Faro & OpenTelemetry dependencies.
+- Deprecated Payment Means's "isActive" property. Use the new state property.
+- The 'stringRepresentation' property of the Token protocol is not throwable anymore.
+
+## [1.1.26]
+- Updated WhitelabelPayInterface protocol to reflect latest changes.
+- PaymentMean initialiser is now public.
+- Fixed cold start option issue when protectedDataDidBecomeAvailableNotification is triggered.
+
+## [1.1.24]
+- Automatically call reset() when the SDK detects an invalidEnrolmentInstance error.
+
+## [1.1.23]
+- Fixed bug when the SDK is in an active state and the Keychain read operation fails.
+- Removed partial private key log.
+
+## [1.1.22]
+- Integrated Faro logging.
+- Removed Keychain items migration code.
+
+## [1.1.21]
+- Improved token publisher updates, the frequency of updates should be lower now.
+- Removed async from the reset function.
+- Added Token creation timestamp.
+- Added a retry mechanism in verifyKeyPair, for cases when the keychain is not directly accessible at startup.
+- Token's stringRepresentation is now non throwable.
+- Added and extra step to double check the validity of the enrolment instance.
+
+## [1.1.20]
+- coldStart option is now true by default.
+- Fixed some false migration triggers.
+
+## [1.1.19]
+- Improved logging when migrating keychain items to latest version.
+- Improved Keychain data migration.
+- Added support for handling multiple environments.
+
+## [1.1.18]
+- Keychain fix.
+- Improved init logging.
+- Added http requests/responses logging.
+
+## [1.1.17]
+- Added public key log entry.
+
+## [1.1.16]
+- Fixed state polling timer.
+
+## [1.1.15]
+- Added extra data protection guards for fetching payment means.
+
+## [1.1.14]
+- Minor patch for state polling.
+
+## [1.1.13]
+- Reduced Keychain reads by moving/caching the subjectID to in-memory.
+- Added public key to logs.
+
+## [1.1.12]
+- Introduces the coldStart option.
+- Reduced the amount of Keychain interactions.
+- Introduced the WhitelabelPayError.invalidEnrolmentInstance error to handle invalid cases where subjectID and Key Pair are a mismatch.
+
+## [1.1.11]
+- Fixed reset SDK func.
+- Added extra log entries for low level Keychain APIs.
+
+## [1.1.10]
+- suppressed reading keychain errors
+- added extra logs.
+
+## [1.1.9]
+- fix: minor patch for private key storage. 
+
+## [1.1.8]
+- fix: Publisher should not get updated to nil.
+
+## [1.1.7]
+- Added automatic pausing / resuming of monitoring & polling
+
 ## [1.1.6]
 - Added setReferenceId() func to update the referenceId.
 - Introduced WhitelabelPayError.missingReferenceId thats thrown when trying to create an onboarding token without a reference Id configured.
