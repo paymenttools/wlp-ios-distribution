@@ -209,6 +209,9 @@
 			);
 			mainGroup = A1C5B6DE2EE7346100D1944B;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A1FEDB752EF06E8C00E5485D /* XCRemoteSwiftPackageReference "wlp-ios-distribution" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A1C5B6E82EE7346100D1944B /* Products */;
 			projectDirPath = "";
@@ -594,6 +597,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A1FEDB752EF06E8C00E5485D /* XCRemoteSwiftPackageReference "wlp-ios-distribution" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/paymenttools/wlp-ios-distribution";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		A1C5B7162EE75D0000D1944B /* WhitelabelPaySDK */ = {
