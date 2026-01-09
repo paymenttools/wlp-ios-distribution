@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-nio.git",
       "state" : {
-        "revision" : "663ddc80f2081c8f22e417cbac5f80270a93795e",
-        "version" : "2.91.0"
+        "revision" : "e3d5c560e0a6bfa391a00e857aa28ad52a41fe8d",
+        "version" : "2.92.1"
       }
     },
     {
@@ -51,7 +51,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/paymenttools/wlp-ios-distribution",
       "state" : {
-        "revision" : "67bc272521869d24e4e436b36cfeebf4978c0af7",
+        "revision" : "57c1fa52aa534145211ce9af164ff6ce99b8267d",
         "version" : "1.2.0"
       }
     }
