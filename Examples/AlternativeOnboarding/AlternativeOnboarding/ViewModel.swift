@@ -68,7 +68,7 @@ import WhitelabelPaySDK
 				city: userInfo.city,
 				postalCode: userInfo.zip,
 				countryCode: "DE",
-				dateOfBirth: "2000-01-10",
+				dateOfBirth: Date.distantPast,
 				phoneNumber: userInfo.phone,
 				email: userInfo.email,
 				userId: "23254322",
