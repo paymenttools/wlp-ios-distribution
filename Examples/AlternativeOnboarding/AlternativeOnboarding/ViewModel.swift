@@ -27,7 +27,7 @@ import WhitelabelPaySDK
 	var navigationPath: [NavigationDestinations] = []
 
 	init() {
-		// TODO: Replace teh tenantId.
+		// TODO: Replace the tenantId.
 		let config = Configuration(
 			tenantId: "###",
 			coldStart: true,

@@ -1,5 +1,5 @@
 {
-  "originHash" : "2d806f10166dbeca3f435c7527214baa13bda2adbfed58a95fa61d981726bc95",
+  "originHash" : "696b85e53e4027d74c00dda77345f4ec7033711d48068351e8a6346880fdaf5e",
   "pins" : [
     {
       "identity" : "swift-atomics",
@@ -44,6 +44,15 @@
       "state" : {
         "revision" : "395a77f0aa927f0ff73941d7ac35f2b46d47c9db",
         "version" : "1.6.3"
+      }
+    },
+    {
+      "identity" : "wlp-ios-distribution",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/paymenttools/wlp-ios-distribution",
+      "state" : {
+        "revision" : "57c1fa52aa534145211ce9af164ff6ce99b8267d",
+        "version" : "1.2.0"
       }
     }
   ],
