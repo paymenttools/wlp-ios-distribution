@@ -606,8 +606,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/paymenttools/wlp-ios-distribution";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.1;
+				branch = main;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
