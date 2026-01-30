@@ -37,7 +37,7 @@ struct ContentView: View {
 				Button(action: {
 					Task {
 						await viewModel.startOnboarding()
-						viewModel.navigationPath = [.userInfo]
+						
 					}
 				}) {
 					Label(
