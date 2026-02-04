@@ -101,6 +101,11 @@ import WhitelabelPaySDK
 	}
 
 	func subscribeForOnboardingStatus() {
+		Task {
+			let details = try await whitelabelPay.fetchCurrentOnboardingDetails()
+			print(details)
+		}
+
 		let publisher = whitelabelPay.fetchOnlineOnboardingDetails()
 
 		// Remove the webFlow freom the stack without animation.
