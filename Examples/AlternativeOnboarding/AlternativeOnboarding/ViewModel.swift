@@ -45,6 +45,18 @@ import WhitelabelPaySDK
 				self?.state = state
 			}
 			.store(in: &cancellables)
+
+		if case .onlineOnboarding(let nextStep) = whitelabelPay.state {
+			if nextStep == .accountImporting {
+				Task {
+					// Refresh the URL.
+					let url = try await whitelabelPay.requestOnboardingURL(successRedirect: URL(string: "finapi://success")!,
+																		   failureRedirect: URL(string: "finapi://failure")!,
+																		   abortRedirect: URL(string: "finapi://abort")!)
+					self.onboardingUrl = url
+				}
+			}
+		}
 	}
 
 	func startOnboarding() async {
