@@ -47,12 +47,17 @@ struct ContentView: View {
 				}
 				.padding()
 
-				Button(action: {
+				Button("Cancel Onboarding") {
+					Task {
+						try viewModel.whitelabelPay.cancelOnlineOnboarding()
+					}
+				}
+				.padding()
+
+				Button("Reset SDK") {
 					Task {
 						try viewModel.whitelabelPay.reset()
 					}
-				}) {
-					Text("Reset SDK")
 				}
 				.padding()
 			}
