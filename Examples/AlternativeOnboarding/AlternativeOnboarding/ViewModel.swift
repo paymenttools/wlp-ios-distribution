@@ -17,6 +17,7 @@ import WhitelabelPaySDK
 	var onboardingUrl: URL?
 
 	var bankAccount: WhitelabelPaySDK.Account?
+	var mandateInfo: WhitelabelPaySDK.MandateInfo?
 
 	var cancellables = Set<AnyCancellable>()
 
@@ -29,7 +30,7 @@ import WhitelabelPaySDK
 	init() {
 		// TODO: Replace the tenantId.
 		let config = Configuration(
-			tenantId: "###",
+			tenantId: "abc",
 			coldStart: true,
 			debug: true,
 			environment: .integration,
@@ -45,6 +46,23 @@ import WhitelabelPaySDK
 				self?.state = state
 			}
 			.store(in: &cancellables)
+
+		if case .onlineOnboarding(let nextStep) = whitelabelPay.state {
+			switch nextStep {
+				case .collectUserInfo: break
+				case .accountImporting:
+					Task {
+						// Refresh the URL.
+						let url = try await whitelabelPay.requestOnboardingURL(successRedirect: URL(string: "finapi://success")!,
+																			   failureRedirect: URL(string: "finapi://failure")!,
+																			   abortRedirect: URL(string: "finapi://abort")!)
+						self.onboardingUrl = url
+					}
+				case .sepaMandateConfirmation(account: let account, mandateInfo: let mandateInfo):
+					self.bankAccount = account
+					self.mandateInfo = mandateInfo
+			}
+		}
 	}
 
 	func startOnboarding() async {
@@ -52,7 +70,21 @@ import WhitelabelPaySDK
 		lastOnboardingErrorMessage = nil
 		
 		do {
-			 try await whitelabelPay.startOnlineOnboarding()
+			// Check if we need to resume the onboarding first.
+			if case .onlineOnboarding(let nextStep) = whitelabelPay.state {
+				switch nextStep {
+					case .collectUserInfo:
+						navigationPath.append(.userInfo)
+					case .accountImporting:
+						navigationPath.append(.webFlow)
+					case .sepaMandateConfirmation:
+						navigationPath.append(.sepaConfirmation)
+				}
+			} else {
+				try await whitelabelPay.startOnlineOnboarding()
+
+				navigationPath = [.userInfo]
+			}
 		} catch {
 			print(error)
 		}
@@ -60,7 +92,7 @@ import WhitelabelPaySDK
 
 	func uploadUserInfo(_ userInfo: UserInfo) async {
 		do {
-			onboardingUrl = try await whitelabelPay.requestOnboardingURL(
+			let userInfo = OnboardingUserInfo(
 				firstName: userInfo.firstName,
 				lastName: userInfo.lastName,
 				street: userInfo.street,
@@ -71,7 +103,11 @@ import WhitelabelPaySDK
 				dateOfBirth: Date.distantPast,
 				phoneNumber: userInfo.phone,
 				email: userInfo.email,
-				userId: "23254322",
+				customerId: "23254322"
+			)
+
+			onboardingUrl = try await whitelabelPay.requestOnboardingURL(
+				userInfo: userInfo,
 				successRedirect: URL(string: "finapi://success")!,
 				failureRedirect: URL(string: "finapi://failure")!,
 				abortRedirect: URL(string: "finapi://abort")!
@@ -83,6 +119,11 @@ import WhitelabelPaySDK
 	}
 
 	func subscribeForOnboardingStatus() {
+		Task {
+			let details = try await whitelabelPay.fetchCurrentOnboardingDetails()
+			print(details)
+		}
+
 		let publisher = whitelabelPay.fetchOnlineOnboardingDetails()
 
 		// Remove the webFlow freom the stack without animation.
@@ -113,6 +154,7 @@ import WhitelabelPaySDK
 		}, receiveValue: { details in
 			self.lastOnboardingState = details.status
 			self.bankAccount = details.account
+			self.mandateInfo = details.mandateInfo
 
 			if details.status == .completed {
 				// We will display the sepa confirmation screen.

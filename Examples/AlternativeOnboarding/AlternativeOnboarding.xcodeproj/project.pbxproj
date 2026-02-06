@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A14566D82F1132DF0086C486 /* WhitelabelPaySDK in Frameworks */ = {isa = PBXBuildFile; productRef = A14566D72F1132DF0086C486 /* WhitelabelPaySDK */; };
+		A101896F2F31280D00B8CCF7 /* WhitelabelPaySDK in Frameworks */ = {isa = PBXBuildFile; productRef = A101896E2F31280D00B8CCF7 /* WhitelabelPaySDK */; };
+		A119A5552F27E22A00CEF685 /* WhitelabelPaySDK in Frameworks */ = {isa = PBXBuildFile; productRef = A119A5542F27E22A00CEF685 /* WhitelabelPaySDK */; };
+		A15F8F9E2F3492120026A1CA /* WhitelabelPaySDK in Frameworks */ = {isa = PBXBuildFile; productRef = A15F8F9D2F3492120026A1CA /* WhitelabelPaySDK */; };
 		A1C7EF422F1127A2009E1AA4 /* WhitelabelPaySDK in Frameworks */ = {isa = PBXBuildFile; productRef = A1C7EF412F1127A2009E1AA4 /* WhitelabelPaySDK */; };
 /* End PBXBuildFile section */
 
@@ -58,7 +60,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1C7EF422F1127A2009E1AA4 /* WhitelabelPaySDK in Frameworks */,
-				A14566D82F1132DF0086C486 /* WhitelabelPaySDK in Frameworks */,
+				A15F8F9E2F3492120026A1CA /* WhitelabelPaySDK in Frameworks */,
+				A119A5552F27E22A00CEF685 /* WhitelabelPaySDK in Frameworks */,
+				A101896F2F31280D00B8CCF7 /* WhitelabelPaySDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,7 +132,9 @@
 			name = AlternativeOnboarding;
 			packageProductDependencies = (
 				A1C7EF412F1127A2009E1AA4 /* WhitelabelPaySDK */,
-				A14566D72F1132DF0086C486 /* WhitelabelPaySDK */,
+				A119A5542F27E22A00CEF685 /* WhitelabelPaySDK */,
+				A101896E2F31280D00B8CCF7 /* WhitelabelPaySDK */,
+				A15F8F9D2F3492120026A1CA /* WhitelabelPaySDK */,
 			);
 			productName = AlternativeOnboarding;
 			productReference = A1C5B6E72EE7346100D1944B /* AlternativeOnboarding.app */;
@@ -213,7 +219,7 @@
 			mainGroup = A1C5B6DE2EE7346100D1944B;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				A14566D62F1132DF0086C486 /* XCRemoteSwiftPackageReference "wlp-ios-distribution" */,
+				A15F8F9C2F3492120026A1CA /* XCRemoteSwiftPackageReference "wlp-ios-distribution" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A1C5B6E82EE7346100D1944B /* Products */;
@@ -602,20 +608,28 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A14566D62F1132DF0086C486 /* XCRemoteSwiftPackageReference "wlp-ios-distribution" */ = {
+		A15F8F9C2F3492120026A1CA /* XCRemoteSwiftPackageReference "wlp-ios-distribution" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/paymenttools/wlp-ios-distribution";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A14566D72F1132DF0086C486 /* WhitelabelPaySDK */ = {
+		A101896E2F31280D00B8CCF7 /* WhitelabelPaySDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A14566D62F1132DF0086C486 /* XCRemoteSwiftPackageReference "wlp-ios-distribution" */;
+			productName = WhitelabelPaySDK;
+		};
+		A119A5542F27E22A00CEF685 /* WhitelabelPaySDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WhitelabelPaySDK;
+		};
+		A15F8F9D2F3492120026A1CA /* WhitelabelPaySDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A15F8F9C2F3492120026A1CA /* XCRemoteSwiftPackageReference "wlp-ios-distribution" */;
 			productName = WhitelabelPaySDK;
 		};
 		A1C7EF412F1127A2009E1AA4 /* WhitelabelPaySDK */ = {
