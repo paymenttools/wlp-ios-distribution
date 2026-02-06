@@ -17,6 +17,7 @@ import WhitelabelPaySDK
 	var onboardingUrl: URL?
 
 	var bankAccount: WhitelabelPaySDK.Account?
+	var mandateInfo: WhitelabelPaySDK.MandateInfo?
 
 	var cancellables = Set<AnyCancellable>()
 
@@ -47,14 +48,19 @@ import WhitelabelPaySDK
 			.store(in: &cancellables)
 
 		if case .onlineOnboarding(let nextStep) = whitelabelPay.state {
-			if nextStep == .accountImporting {
-				Task {
-					// Refresh the URL.
-					let url = try await whitelabelPay.requestOnboardingURL(successRedirect: URL(string: "finapi://success")!,
-																		   failureRedirect: URL(string: "finapi://failure")!,
-																		   abortRedirect: URL(string: "finapi://abort")!)
-					self.onboardingUrl = url
-				}
+			switch nextStep {
+				case .collectUserInfo: break
+				case .accountImporting:
+					Task {
+						// Refresh the URL.
+						let url = try await whitelabelPay.requestOnboardingURL(successRedirect: URL(string: "finapi://success")!,
+																			   failureRedirect: URL(string: "finapi://failure")!,
+																			   abortRedirect: URL(string: "finapi://abort")!)
+						self.onboardingUrl = url
+					}
+				case .sepaMandateConfirmation(account: let account, mandateInfo: let mandateInfo):
+					self.bankAccount = account
+					self.mandateInfo = mandateInfo
 			}
 		}
 	}
@@ -148,6 +154,7 @@ import WhitelabelPaySDK
 		}, receiveValue: { details in
 			self.lastOnboardingState = details.status
 			self.bankAccount = details.account
+			self.mandateInfo = details.mandateInfo
 
 			if details.status == .completed {
 				// We will display the sepa confirmation screen.

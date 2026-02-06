@@ -95,7 +95,7 @@ struct ContentView: View {
 							}
 						}
 					case .sepaConfirmation:
-						SepaConfirmation(account: $viewModel.bankAccount) {
+						SepaConfirmation(account: $viewModel.bankAccount, mandateInfo: $viewModel.mandateInfo) {
 							Task {
 								await viewModel.confirmSepaMandate()
 							}
@@ -123,36 +123,49 @@ struct ContentView: View {
 struct SepaConfirmation: View {
 
 	@Binding var account: Account?
+	@Binding var mandateInfo: MandateInfo?
 
 	let onAction: () -> Void
 
 	var body: some View {
-		VStack {
-			Text("Do you wand to confirm the SEPA mandate for this account?")
+		ScrollView {
+			VStack {
+				Text("Do you wand to confirm the SEPA mandate for this account?")
+					.padding()
+
+				if let account, let mandateInfo {
+					HStack {
+						Text("IBAN:")
+							.fontWeight(.bold)
+						Text(account.iban)
+					}
+
+					HStack {
+						Text("Account Holder:")
+							.fontWeight(.bold)
+						Text(account.accountHolderName)
+					}
+
+					HStack {
+						Text("SEPA Mandate: ")
+							.fontWeight(.bold)
+					}
+
+					Text(mandateInfo.mandateText)
+						//.lineLimit(30, reservesSpace: false)
+						.padding()
+				}
+
+				Button(action: {
+					onAction()
+				}) {
+					Label(
+						title: { Text("Confirm Sepa Mandate") },
+						icon: { Image(systemName: "checkmark.seal.fill") }
+					)
+				}
 				.padding()
-
-			if let account = account{
-				HStack {
-					Text("IBAN:")
-						.fontWeight(.bold)
-					Text(account.iban)
-				}
-				HStack {
-					Text("Account Holder:")
-						.fontWeight(.bold)
-					Text(account.accountHolderName)
-				}
 			}
-
-			Button(action: {
-				onAction()
-			}) {
-				Label(
-					title: { Text("Confirm Sepa Mandate") },
-					icon: { Image(systemName: "checkmark.seal.fill") }
-				)
-			}
-			.padding()
 		}
 	}
 }
