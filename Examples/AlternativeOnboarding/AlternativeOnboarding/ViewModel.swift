@@ -27,6 +27,8 @@ import WhitelabelPaySDK
 
 	var navigationPath: [NavigationDestinations] = []
 
+	var paymentToken: String?
+
 	init() {
 		// TODO: Replace the tenantId.
 		let config = Configuration(
@@ -44,6 +46,18 @@ import WhitelabelPaySDK
 			.receive(on: DispatchQueue.main)
 			.sink { [weak self] state in
 				self?.state = state
+
+				if state == .active {
+					do {
+						let token = try self?.whitelabelPay.getPaymentToken()
+						let tokenString = token?.stringRepresentation
+						print(tokenString)
+
+						self?.paymentToken = tokenString
+					} catch {
+						
+					}
+				}
 			}
 			.store(in: &cancellables)
 
@@ -61,6 +75,15 @@ import WhitelabelPaySDK
 				case .sepaMandateConfirmation(account: let account, mandateInfo: let mandateInfo):
 					self.bankAccount = account
 					self.mandateInfo = mandateInfo
+
+					Task {
+						do {
+							let details = try await whitelabelPay.fetchCurrentOnboardingDetails()
+							print(details)
+						} catch {
+							print(error)
+						}
+					}
 			}
 		}
 	}
@@ -120,8 +143,12 @@ import WhitelabelPaySDK
 
 	func subscribeForOnboardingStatus() {
 		Task {
-			let details = try await whitelabelPay.fetchCurrentOnboardingDetails()
-			print(details)
+			do {
+				let details = try await whitelabelPay.fetchCurrentOnboardingDetails()
+				print(details)
+			} catch {
+				print(error)
+			}
 		}
 
 		let publisher = whitelabelPay.fetchOnlineOnboardingDetails()

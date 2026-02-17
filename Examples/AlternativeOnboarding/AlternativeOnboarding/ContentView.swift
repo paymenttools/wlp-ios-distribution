@@ -27,6 +27,8 @@ struct ContentView: View {
 		NavigationStack(path: $viewModel.navigationPath) {
 
 			VStack {
+				AztecCodeView(wlp: viewModel.whitelabelPay)
+
 				HStack {
 					Text("SDK Status: ")
 						.fontWeight(.bold)
