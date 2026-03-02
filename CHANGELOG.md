@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Released]
 
+## [1.2.3]
+- Added new WhitelabelPayError.accountActivationRestricted to indicate when an imported IBAN is not allowed to be used.
+- Updated internal endpoint for retrieving the account importing webform URL without resending the user info.
+- Compiled with Xcode 26.3.
+
+## [1.2.2]
+- Added ability to retrieve Sepa Mandate text.
+- Expiration time of onboardings, if a user didn't finished the onboarding in 7 days, the SDK will automatically switch to `inactive` state.
+- Added `cancelOnlineOnboarding()` to help with reseting the SDK back to .inactive / .active if the user aborts the online onboarding.
+- Deprecated the `.onboarding` state.
+- Changed the `sepaMandateConfirmation(account: Account, mandateInfo: MandateInfo)` step to have associated values.
+- If `startOnlineOnboarding()` was previously called and the user information was already sent, you can now call `requestOnboardingURL()` without the user information, to retrieve the account importing URL.
+
+## [1.2.1]
+- Updated network requests signature for alternative onboarding. 
+- In order to avoid String date formatting we switched to a `Date` type instead of `String` for `requestOnboardingURL()` func parameter.
+  
 ## [1.2.0]
 - Added alternative onboarding feature. 
 - Added new demo for Alternative Onboarding in the Examples folder.
