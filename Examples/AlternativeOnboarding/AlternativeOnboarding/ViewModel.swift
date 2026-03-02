@@ -32,10 +32,10 @@ import WhitelabelPaySDK
 	init() {
 		// TODO: Replace the tenantId.
 		let config = Configuration(
-			tenantId: "abc",
+			tenantId: "rew",
 			coldStart: true,
 			debug: true,
-			environment: .integration,
+			environment: .development,
 			azp: "wlp-production-client"
 		)
 
@@ -54,6 +54,10 @@ import WhitelabelPaySDK
 						print(tokenString)
 
 						self?.paymentToken = tokenString
+//						Task {
+//							let list = try await self?.whitelabelPay.getPaymentMeans()
+//							print(list)
+//						}
 					} catch {
 						
 					}
