@@ -1,5 +1,5 @@
 {
-  "originHash" : "2d806f10166dbeca3f435c7527214baa13bda2adbfed58a95fa61d981726bc95",
+  "originHash" : "696b85e53e4027d74c00dda77345f4ec7033711d48068351e8a6346880fdaf5e",
   "pins" : [
     {
       "identity" : "swift-atomics",
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-nio.git",
       "state" : {
-        "revision" : "5e72fc102906ebe75a3487595a653e6f43725552",
-        "version" : "2.94.0"
+        "revision" : "e932d3c4d8f77433c8f7093b5ebcbf91463948a0",
+        "version" : "2.95.0"
       }
     },
     {
@@ -44,6 +44,15 @@
       "state" : {
         "revision" : "7c6ad0fc39d0763e0b699210e4124afd5041c5df",
         "version" : "1.6.4"
+      }
+    },
+    {
+      "identity" : "wlp-ios-distribution",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/paymenttools/wlp-ios-distribution",
+      "state" : {
+        "revision" : "02dade8c4acdf837635d58742e67e03bca1bd250",
+        "version" : "1.2.3"
       }
     }
   ],

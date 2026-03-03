@@ -70,11 +70,15 @@ import WhitelabelPaySDK
 				case .collectUserInfo: break
 				case .accountImporting:
 					Task {
-						// Refresh the URL.
-						let url = try await whitelabelPay.requestOnboardingURL(successRedirect: URL(string: "finapi://success")!,
-																			   failureRedirect: URL(string: "finapi://failure")!,
-																			   abortRedirect: URL(string: "finapi://abort")!)
-						self.onboardingUrl = url
+						do {
+							// Refresh the URL.
+							let url = try await whitelabelPay.requestOnboardingURL(successRedirect: URL(string: "finapi://success")!,
+																				   failureRedirect: URL(string: "finapi://failure")!,
+																				   abortRedirect: URL(string: "finapi://abort")!)
+							self.onboardingUrl = url
+						} catch {
+							//
+						}
 					}
 				case .sepaMandateConfirmation(account: let account, mandateInfo: let mandateInfo):
 					self.bankAccount = account
@@ -84,6 +88,19 @@ import WhitelabelPaySDK
 						do {
 							let details = try await whitelabelPay.fetchCurrentOnboardingDetails()
 							print(details)
+						} catch WhitelabelPayError.accountActivationRestricted {
+
+							// Lets grab a new account importing URL.
+							let url = try await whitelabelPay.requestOnboardingURL(successRedirect: URL(string: "finapi://success")!,
+																				   failureRedirect: URL(string: "finapi://failure")!,
+																				   abortRedirect: URL(string: "finapi://abort")!)
+							self.onboardingUrl = url
+
+							UIView.setAnimationsEnabled(false)
+							self.navigationPath.removeAll { $0 == .webFlow || $0 == .inProgress }
+							UIView.setAnimationsEnabled(true)
+
+							self.navigationPath.append(.webFlow)
 						} catch {
 							print(error)
 						}
