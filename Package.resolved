@@ -1,5 +1,5 @@
 {
-  "originHash" : "c836f329af6c6ca00f5f2115338332bad958aaf902cdb3a738d098d5792582c8",
+  "originHash" : "d1afa7fa1697420d273c8451d2137e1f6e483697d43d846998cc13f814ab9318",
   "pins" : [
     {
       "identity" : "swift-atomics",
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-ntp.git",
       "state" : {
-        "revision" : "4a2f18f36e897f5f28bb6a75e0c7223c65021736",
-        "version" : "0.3.1"
+        "revision" : "418c5943019f8132740df05ae5b4acc9c23e1cb7",
+        "version" : "0.4.0"
       }
     },
     {
