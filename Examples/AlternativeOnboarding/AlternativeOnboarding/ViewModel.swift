@@ -190,7 +190,8 @@ import WhitelabelPaySDK
 				case .failure(let error):
 					if case WhitelabelPayError.onlineOnboarding(let state, let errorMessage, let error) = error {
 						self.lastOnboardingState = state
-						self.lastOnboardingErrorMessage = error?.description ?? errorMessage
+						self.lastOnboardingErrorMessage = error?.errorMessage
+						print(error?.errorCode)
 
 						UIView.setAnimationsEnabled(false)
 						self.navigationPath.removeAll { $0 == .webFlow || $0 == .inProgress }
