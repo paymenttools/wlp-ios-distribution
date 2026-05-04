@@ -27,6 +27,16 @@ struct ContentView: View {
 		NavigationStack(path: $viewModel.navigationPath) {
 
 			VStack {
+				if viewModel.didExpireOnlineOnboardingSession {
+					HStack {
+						Text("Online Onboarding has been reset. Please start again.")
+							.fontWeight(.medium)
+							.foregroundStyle(.gray)
+							.background(.yellow)
+					}
+					.padding()
+				}
+
 				AztecCodeView(wlp: viewModel.whitelabelPay)
 
 				HStack {
@@ -39,7 +49,7 @@ struct ContentView: View {
 				Button(action: {
 					Task {
 						await viewModel.startOnboarding()
-						
+
 					}
 				}) {
 					Label(
@@ -154,7 +164,7 @@ struct SepaConfirmation: View {
 					}
 
 					Text(mandateInfo.mandateText)
-						//.lineLimit(30, reservesSpace: false)
+						// .lineLimit(30, reservesSpace: false)
 						.padding()
 				}
 
@@ -237,4 +247,3 @@ struct FailureView: View {
     ContentView()
 		.environment(ViewModel())
 }
-
