@@ -22,12 +22,14 @@ import WhitelabelPaySDK
 	var cancellables = Set<AnyCancellable>()
 
 	var lastOnboardingState: OnlineOnboardingState?
-	
+
 	var lastOnboardingErrorMessage: String?
 
 	var navigationPath: [NavigationDestinations] = []
 
 	var paymentToken: String?
+
+	var didExpireOnlineOnboardingSession: Bool = false
 
 	init() {
 		// TODO: Replace the tenantId.
@@ -35,12 +37,19 @@ import WhitelabelPaySDK
 			tenantId: "###",
 			coldStart: true,
 			debug: true,
-			environment: .development,
+			environment: .integration,
 			azp: "wlp-production-client"
 		)
 
 		whitelabelPay = WhitelabelPay(config: config)
 		whitelabelPay.setReferenceId("550e8400-e29b-41d4-a716-446655440000")
+
+		whitelabelPay.$didExpireOnlineOnboardingSession
+			.receive(on: DispatchQueue.main)
+			.sink { [weak self] value in
+				self?.didExpireOnlineOnboardingSession = value
+			}
+			.store(in: &cancellables)
 
 		whitelabelPay.$state
 			.receive(on: DispatchQueue.main)
@@ -54,8 +63,12 @@ import WhitelabelPaySDK
 						print(tokenString)
 
 						self?.paymentToken = tokenString
+//						Task {
+//							let list = try await self?.whitelabelPay.getPaymentMeans()
+//							print(list)
+//						}
 					} catch {
-						
+
 					}
 				}
 			}
@@ -73,7 +86,7 @@ import WhitelabelPaySDK
 																				   abortRedirect: URL(string: "finapi://abort")!)
 							self.onboardingUrl = url
 						} catch {
-							//
+							print(error)
 						}
 					}
 				case .sepaMandateConfirmation(account: let account, mandateInfo: let mandateInfo):
@@ -103,12 +116,16 @@ import WhitelabelPaySDK
 					}
 			}
 		}
+
+		Task {
+			await whitelabelPay.sync()
+		}
 	}
 
 	func startOnboarding() async {
 		lastOnboardingState = nil
 		lastOnboardingErrorMessage = nil
-		
+
 		do {
 			// Check if we need to resume the onboarding first.
 			if case .onlineOnboarding(let nextStep) = whitelabelPay.state {
@@ -116,6 +133,15 @@ import WhitelabelPaySDK
 					case .collectUserInfo:
 						navigationPath.append(.userInfo)
 					case .accountImporting:
+
+						// Lets get the URL again.
+						if onboardingUrl == nil {
+							let url = try await whitelabelPay.requestOnboardingURL(successRedirect: URL(string: "finapi://success")!,
+																				   failureRedirect: URL(string: "finapi://failure")!,
+																				   abortRedirect: URL(string: "finapi://abort")!)
+							self.onboardingUrl = url
+						}
+
 						navigationPath.append(.webFlow)
 					case .sepaMandateConfirmation:
 						navigationPath.append(.sepaConfirmation)
@@ -165,6 +191,12 @@ import WhitelabelPaySDK
 				print(details)
 			} catch {
 				print(error)
+
+				if case WhitelabelPayError.onlineOnboarding(let state, let errorMessage, let code) = error {
+					print(errorMessage, code)
+
+					onboardingUrl = nil
+				}
 			}
 		}
 
@@ -184,10 +216,10 @@ import WhitelabelPaySDK
 				case .finished:
 					print("Completed.")
 				case .failure(let error):
-					if case WhitelabelPayError.onlineOnboarding(let state, let errorMessage, let error) = error {
+					if case WhitelabelPayError.onlineOnboarding(let state, let errorMessage, _) = error {
 						self.lastOnboardingState = state
-						self.lastOnboardingErrorMessage = error?.errorMessage
-						print(error?.errorCode)
+						self.lastOnboardingErrorMessage = errorMessage
+						self.onboardingUrl = nil
 
 						UIView.setAnimationsEnabled(false)
 						self.navigationPath.removeAll { $0 == .webFlow || $0 == .inProgress }
