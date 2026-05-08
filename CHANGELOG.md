@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Released]
 
+## [1.2.4]
+- Added new .didExpireOnlineOnboardingSession property that indicates if the previous online onboarding session has been reset.
+
 ## [1.2.3]
 - Added new WhitelabelPayError.accountActivationRestricted to indicate when an imported IBAN is not allowed to be used.
 - Updated internal endpoint for retrieving the account importing webform URL without resending the user info.
