@@ -32,7 +32,7 @@ import WhitelabelPaySDK
 	init() {
 		// TODO: Replace the tenantId.
 		let config = Configuration(
-			tenantId: "###",
+			tenantId: "rew",
 			coldStart: true,
 			debug: true,
 			environment: .development,
