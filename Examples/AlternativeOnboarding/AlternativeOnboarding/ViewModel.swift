@@ -35,7 +35,7 @@ import WhitelabelPaySDK
 			tenantId: "rew",
 			coldStart: true,
 			debug: true,
-			environment: .development,
+			environment: .integration,
 			azp: "wlp-production-client"
 		)
 
