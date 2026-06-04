@@ -1,0 +1,72 @@
+# This workflow will build a Swift project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
+
+name: Unit Tests
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+    
+env:
+  SIMULATOR_NAME: iPhone 17 Pro
+  SIMULATOR_VERSION: 26.4
+  
+jobs:
+  Tests:
+
+    runs-on: macos-26
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: extractions/netrc@v1
+        with:
+          machine: github.com
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PAT }}
+
+      - name: Set Xcode version
+        uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd # v1.6.0
+        with:
+          xcode-version: 26.4.1
+      # - name: Boot Simulator
+      #   run: |
+      #       echo "Listing simulator devices:"
+      #       SIMULATORS=$(xcrun simctl list devices "iOS $SIMULATOR_VERSION" available)
+      #       echo "$SIMULATORS"
+      #       DEVICE_ID=$(echo "$SIMULATORS" | grep "$SIMULATOR_NAME" | head -1 | sed -E 's/.*\(([A-F0-9-]+)\).*/\1/')
+      #       echo "--------------------------------"
+      #       echo "👀 Updating dyld_shared_cache:"
+      #       xcrun simctl runtime dyld_shared_cache update --all
+      #       echo "--------------------------------"
+      #       echo "👀 Booting simulator: $_SIMULATOR_NAME ($_SIMULATOR_VERSION) with ID: $DEVICE_ID"
+      #       xcrun simctl bootstatus "$DEVICE_ID" -b
+      
+      # - uses: swift-actions/setup-swift@v2
+      #   with:
+      #     swift-version: "6.2"
+      # - name: Get swift version
+      #   run: swift --version
+        
+      # - name: Run tests
+      #   run: xcodebuild test -only-testing-tags unitTests -scheme WhitelabelPaySDK -destination 'platform=iOS Simulator,name=iPhone 17 Pro Max'
+
+      - name: Trust Swift package plugins
+        run: defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidatation -bool YES
+
+
+      - name: Test
+        run: |
+          set -o pipefail
+          # swift test --filter UnitTests 2>&1 | xcbeautify --renderer github-actions | tee xcodebuild.log
+          xcodebuild test -only-testing-tags unitTests \
+          -scheme "WhitelabelPaySDK" \
+          -destination "platform=iOS Simulator,name=iPhone 17 Pro Max" \
+          CODE_SIGNING_ALLOWED=NO \
+          CODE_SIGNING_REQUIRED=NO \
+          CODE_SIGN_IDENTITY="" \
+          PROVISIONING_PROFILE_SPECIFIER="" \
+          DEVELOPMENT_TEAM="" \
+          ENABLE_HARDENED_RUNTIME=NO | \
+          xcbeautify --renderer github-actions \
+          | tee xcodebuild.log && exit ${PIPESTATUS[0]}
