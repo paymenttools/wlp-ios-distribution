@@ -1,0 +1,46 @@
+# This workflow will build a Swift project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
+
+name: Package Integration Test
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+    
+env:
+  SIMULATOR_NAME: iPhone 17 Pro
+  SIMULATOR_VERSION: 26.4
+  
+jobs:
+  Tests:
+
+    runs-on: macos-26
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set Xcode version
+        uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd # v1.6.0
+        with:
+          xcode-version: 26.4.1
+
+      - name: Trust Swift package plugins
+        run: defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidatation -bool YES
+
+      - name: Switch Example To Use Local Package
+        run: ./switch-package-source.sh local
+
+      - name: Test iOS Simulator
+        run: |
+            xcodebuild -project Examples/AlternativeOnboarding/AlternativeOnboarding.xcodeproj \
+              -scheme AlternativeOnboarding \
+              -destination "generic/platform=iOS Simulator" build
+
+      - name: Test iOS Device
+        run: |
+            xcodebuild \
+              -project Examples/AlternativeOnboarding/AlternativeOnboarding.xcodeproj \
+              -scheme AlternativeOnboarding \
+              -destination 'generic/platform=iOS' \
+              CODE_SIGNING_ALLOWED=NO \
+              clean build
