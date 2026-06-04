@@ -34,7 +34,7 @@ jobs:
         run: |
             xcodebuild -project Examples/AlternativeOnboarding/AlternativeOnboarding.xcodeproj \
               -scheme AlternativeOnboarding \
-              -destination 'platform=iOS Simulator,name=$SIMULATOR_NAME' build
+              -destination "generic/platform=iOS Simulator" build
 
       - name: Test iOS Device
         run: |
