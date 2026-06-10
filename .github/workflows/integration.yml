@@ -7,10 +7,6 @@ on:
   pull_request:
     branches: [ main, develop ]
     
-env:
-  SIMULATOR_NAME: iPhone 17 Pro
-  SIMULATOR_VERSION: 26.4
-  
 jobs:
   Tests:
 
