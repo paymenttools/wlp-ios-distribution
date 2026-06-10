@@ -1,0 +1,50 @@
+# These settings are synced to GitHub by https://probot.github.io/apps/settings/
+
+_extends: .github
+
+repository:
+  # See https://docs.github.com/en/rest/reference/repos#update-a-repository for all available settings.
+  # The name of the repository. Changing this will rename the repository
+  name: wlp-ios-sdk
+
+# Collaborators: give specific users access to this repository.
+# See https://docs.github.com/en/rest/reference/repos#add-a-repository-collaborator for available options
+collaborators:
+  - username: janlepsky
+    permission: push
+  - username: andyzaharia
+    permission: push
+  - username: beneiltis
+    permission: push
+  - username: thomaslange
+    permission: push
+  - username: rd-frederik-stratmann
+    permission: push
+  - username: UemitGuel
+    permission: push
+  - username: rd-andre-wollenweber
+    permission: push
+  - username: rd-david-wahlandt
+    permission: push
+  - username: alex-r-smartdata
+    permission: push
+
+  # Note: `permission` is only valid on organization-owned repositories.
+  # The permission to grant the collaborator. Can be one of:
+  # * `pull` - can pull, but not push to or administer this repository.
+  # * `push` - can pull and push, but not administer this repository.
+  # * `admin` - can pull, push and administer this repository.
+  # * `maintain` - Recommended for project managers who need to manage the repository without access to sensitive or destructive actions.
+  # * `triage` - Recommended for contributors who need to proactively manage issues and pull requests without write access.
+
+# See https://docs.github.com/en/rest/reference/teams#add-or-update-team-repository-permissions for available options
+teams:
+  - name: dev-team-moby
+    permission: admin
+  - name: infrastructure-administration
+    permission: pull
+
+branches:
+  - name: main
+    protection:
+      enforce_admins: false
