@@ -18,7 +18,7 @@ let package = Package(
 		
     ],
     targets: [
-		.binaryTarget(name: "WhitelabelPaySDK", path: "binary/WhitelabelPaySDK-v1.2.11.zip"),
+		.binaryTarget(name: "WhitelabelPaySDK", path: "binary/WhitelabelPaySDK-v1.2.12.zip"),
 		.target(
 			name: "WLP",
 			dependencies: [
