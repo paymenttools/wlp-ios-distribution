@@ -39,7 +39,6 @@ struct ContentView: View {
 				Button(action: {
 					Task {
 						await viewModel.startOnboarding()
-						
 					}
 				}) {
 					Label(
@@ -70,7 +69,14 @@ struct ContentView: View {
 						UserInfoFormView { userInfo in
 							Task {
 								await viewModel.uploadUserInfo(userInfo)
+//								await viewModel.uploadUserInfo(userInfo)
 								viewModel.navigationPath.append(.webFlow)
+
+//								DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+//									Task {
+//										await viewModel.uploadUserInfo()
+//									}
+//								}
 							}
 						}
 						.navigationTitle("User Information")
@@ -85,6 +91,12 @@ struct ContentView: View {
 								// Lets check if the abort/cancel wasn't trigered.
 								if host == "abort" {
 									viewModel.navigationPath.removeAll { $0 == .webFlow }
+								} else if host == "failure" {
+									Task {
+										viewModel.navigationPath.removeLast()
+										await viewModel.uploadUserInfo()
+										viewModel.navigationPath.append(.webFlow)
+									}
 								} else {
 									// We go ahead and subscribe to get the confirmation or failure of the account importing process.
 									viewModel.subscribeForOnboardingStatus()
