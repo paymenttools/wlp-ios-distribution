@@ -32,7 +32,7 @@ import WhitelabelPaySDK
 	init() {
 		// TODO: Replace the tenantId.
 		let config = Configuration(
-			tenantId: "###",
+			tenantId: "rew",
 			coldStart: true,
 			debug: true,
 			environment: .integration,
@@ -116,7 +116,17 @@ import WhitelabelPaySDK
 					case .collectUserInfo:
 						navigationPath.append(.userInfo)
 					case .accountImporting:
+
+						// Lets get the URL again.
+						if onboardingUrl == nil {
+							let url = try await whitelabelPay.requestOnboardingURL(successRedirect: URL(string: "finapi://success")!,
+																				   failureRedirect: URL(string: "finapi://failure")!,
+																				   abortRedirect: URL(string: "finapi://abort")!)
+							self.onboardingUrl = url
+						}
+
 						navigationPath.append(.webFlow)
+
 					case .sepaMandateConfirmation:
 						navigationPath.append(.sepaConfirmation)
 				}
@@ -130,28 +140,31 @@ import WhitelabelPaySDK
 		}
 	}
 
-	func uploadUserInfo(_ userInfo: UserInfo) async {
+	func uploadUserInfo() async {
 		do {
-			let userInfo = OnboardingUserInfo(
-				firstName: userInfo.firstName,
-				lastName: userInfo.lastName,
-				street: userInfo.street,
-				houseNumber: "20", // TODO: Add this field to the UI
-				city: userInfo.city,
-				postalCode: userInfo.zip,
-				countryCode: "DE",
-				dateOfBirth: Date.distantPast,
-				phoneNumber: userInfo.phone,
-				email: userInfo.email,
-				customerId: "23254322"
+			onboardingUrl = try await whitelabelPay.requestOnboardingURL(
+				successRedirect: URL(string: "finapi://success")!,
+				failureRedirect: URL(string: "finapi://failure")!,
+				abortRedirect: URL(string: "finapi://abort")!
 			)
 
+			print(onboardingUrl)
+		} catch {
+			lastOnboardingErrorMessage = error.localizedDescription
+		}
+		print("Uploaded info.")
+	}
+
+	func uploadUserInfo(_ userInfo: OnboardingUserInfo?) async {
+		do {
 			onboardingUrl = try await whitelabelPay.requestOnboardingURL(
 				userInfo: userInfo,
 				successRedirect: URL(string: "finapi://success")!,
 				failureRedirect: URL(string: "finapi://failure")!,
 				abortRedirect: URL(string: "finapi://abort")!
 			)
+
+			print(onboardingUrl)
 		} catch {
 			lastOnboardingErrorMessage = error.localizedDescription
 		}

@@ -1,20 +1,20 @@
 import SwiftUI
 import WhitelabelPaySDK
 
-struct UserInfo {
-	let firstName: String
-	let lastName: String
-	let email: String
-	let dateOfBirth: Date
-	let street: String
-	let zip: String
-	let city: String
-	let phone: String
-}
+//struct UserInfo {
+//	let firstName: String
+//	let lastName: String
+//	let email: String
+//	let dateOfBirth: Date
+//	let street: String
+//	let zip: String
+//	let city: String
+//	let phone: String
+//}
 
 struct UserInfoFormView: View {
 
-	typealias OnDidClose = (UserInfo) -> Void
+	typealias OnDidClose = (OnboardingUserInfo) -> Void
 
     @Environment(\.dismiss) private var dismiss
 
@@ -117,15 +117,31 @@ struct UserInfoFormView: View {
     // MARK: - Actions
 
     private func saveAndContinue() {
-		let info = UserInfo(firstName: firstName,
-				 lastName: lastName,
-				 email: email,
-				 dateOfBirth: dateOfBirth,
-				 street: street,
-				 zip: zip,
-				 city: city,
-				 phone: phone)
-		onClose(info)
+
+		let userInfo = OnboardingUserInfo(
+			firstName: firstName,
+			lastName: lastName,
+			street: street,
+			houseNumber: "20", // TODO: Add this field to the UI
+			city: city,
+			postalCode: zip,
+			countryCode: "RO",
+			dateOfBirth: dateOfBirth,
+			phoneNumber: phone,
+			email: email,
+			customerId: "23254322"
+		)
+
+
+//		let info = OnboardingUserInfo(firstName: firstName,
+//				 lastName: lastName,
+//				 email: email,
+//				 dateOfBirth: dateOfBirth,
+//				 street: street,
+//				 zip: zip,
+//				 city: city,
+//				 phone: phone)
+		onClose(userInfo)
 
     }
 
