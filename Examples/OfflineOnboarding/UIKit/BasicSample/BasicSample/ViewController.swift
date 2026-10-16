@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     
     var whitelabel: WhitelabelPay
 
-    let configuration = Configuration(tenantId: "rew",
+    let configuration = Configuration(tenantId: "abc",
                                       referenceId: "6bac7eea-c120-428d-beb6-910c6f290434",
                                       environment: .integration,
                                       azp: "wlp-integration-client")
