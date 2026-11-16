@@ -11,8 +11,8 @@ env:
   # ---- adjust these to your project ----
   WORKSPACE_ARGS: "-project Examples/AlternativeOnboarding/AlternativeOnboarding.xcodeproj"   # or: -workspace X.xcworkspace
   SCHEME: "AlternativeOnboarding"
-  DESTINATION: "platform=iOS Simulator,name=iPhone 16,OS=latest"
-  XCODE_VERSION: "26.4.1"
+  DESTINATION: "platform=iOS Simulator,name=iPhone 18 Pro,OS=latest"
+  XCODE_VERSION: "27.2.0"
   # --------------------------------------
   DERIVED_DATA: ${{ github.workspace }}/.derivedData
   LOG_DIR: ${{ github.workspace }}/ci-logs
@@ -28,7 +28,7 @@ defaults:
 jobs:
   Tests:
 
-    runs-on: macos-26
+    runs-on: xcode-27
     
     steps:
       - uses: actions/checkout@v4
@@ -36,7 +36,11 @@ jobs:
       - name: Set Xcode version
         uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd # v1.6.0
         with:
-          xcode-version: 26.4.1
+          xcode-version: ${{ env.XCODE_VERSION }}
+
+      - name: Make Log Dir
+        run: |
+          mkdir -p "$LOG_DIR"
 
       - name: Trust Swift package plugins
         run: defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidatation -bool YES
@@ -44,6 +48,21 @@ jobs:
       - name: Switch Example To Use Local Package
         run: ./switch-package-source.sh local
 
+      # Printed up front so a failure can be tied to the toolchain/simulator
+      # without re-running the job.
+      - name: Environment info
+        run: |
+          {
+            echo "### Environment"
+            echo '```'
+            xcodebuild -version
+            swift --version 2>&1 | head -2
+            echo "Runner image: ${ImageOS:-?} ${ImageVersion:-?}"
+            echo "Destination:  $DESTINATION"
+            echo '```'
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+          xcrun simctl list devices available | grep -i iphone || true
+      
       # Phase 1 - dependency resolution (binary target checksum, auth,
       # version conflicts fail here, not somewhere inside the build).
       - name: "Phase 1: Resolve packages"
