@@ -6,7 +6,25 @@ name: Package Integration Test
 on:
   pull_request:
     branches: [ main, develop ]
-    
+
+env:
+  # ---- adjust these to your project ----
+  WORKSPACE_ARGS: "-project Examples/AlternativeOnboarding/AlternativeOnboarding.xcodeproj"   # or: -workspace X.xcworkspace
+  SCHEME: "AlternativeOnboarding"
+  DESTINATION: "platform=iOS Simulator,name=iPhone 16,OS=latest"
+  XCODE_VERSION: "26.4.1"
+  # --------------------------------------
+  DERIVED_DATA: ${{ github.workspace }}/.derivedData
+  LOG_DIR: ${{ github.workspace }}/ci-logs
+  RESULT_BUNDLE: ${{ github.workspace }}/ci-logs/TestResults.xcresult
+  NSUnbufferedIO: "YES"   # keeps xcodebuild output in order when piped
+  
+defaults:
+  run:
+    # Explicit `bash` => GitHub runs it with `-eo pipefail`, so a failing
+    # xcodebuild is not masked by `| tee | xcbeautify`.
+    shell: bash
+
 jobs:
   Tests:
 
@@ -26,11 +44,23 @@ jobs:
       - name: Switch Example To Use Local Package
         run: ./switch-package-source.sh local
 
+      # Phase 1 - dependency resolution (binary target checksum, auth,
+      # version conflicts fail here, not somewhere inside the build).
+      - name: "Phase 1: Resolve packages"
+        id: resolve
+        run: |
+          xcodebuild -resolvePackageDependencies \
+            $WORKSPACE_ARGS -scheme "$SCHEME" \
+            -derivedDataPath "$DERIVED_DATA" \
+            2>&1 | tee "$LOG_DIR/1-resolve.log"
+
       - name: Test iOS Simulator
         run: |
             xcodebuild -project Examples/AlternativeOnboarding/AlternativeOnboarding.xcodeproj \
               -scheme AlternativeOnboarding \
-              -destination "generic/platform=iOS Simulator" build
+              -destination "generic/platform=iOS Simulator" build \
+              2>&1 | tee "$LOG_DIR/2-build.log" \
+                 | xcbeautify --renderer github-actions
 
       - name: Test iOS Device
         run: |
@@ -39,4 +69,6 @@ jobs:
               -scheme AlternativeOnboarding \
               -destination 'generic/platform=iOS' \
               CODE_SIGNING_ALLOWED=NO \
-              clean build
+              clean build \
+              2>&1 | tee "$LOG_DIR/2-build.log" \
+                 | xcbeautify --renderer github-actions
