@@ -11,7 +11,7 @@ env:
   # ---- adjust these to your project ----
   WORKSPACE_ARGS: "-project Examples/AlternativeOnboarding/AlternativeOnboarding.xcodeproj"   # or: -workspace X.xcworkspace
   SCHEME: "AlternativeOnboarding"
-  DESTINATION: "platform=iOS Simulator,name=iPhone 16,OS=latest"
+  DESTINATION: "platform=iOS Simulator,name=iPhone 18 Pro,OS=latest"
   XCODE_VERSION: "27.2.0"
   # --------------------------------------
   DERIVED_DATA: ${{ github.workspace }}/.derivedData
