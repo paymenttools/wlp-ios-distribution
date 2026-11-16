@@ -38,6 +38,10 @@ jobs:
         with:
           xcode-version: ${{ env.XCODE_VERSION }}
 
+      - name: Make Log Dir
+        run: |
+          mkdir -p "$LOG_DIR"
+
       - name: Trust Swift package plugins
         run: defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidatation -bool YES
 
