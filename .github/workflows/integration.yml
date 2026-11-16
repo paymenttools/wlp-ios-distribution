@@ -44,6 +44,21 @@ jobs:
       - name: Switch Example To Use Local Package
         run: ./switch-package-source.sh local
 
+      # Printed up front so a failure can be tied to the toolchain/simulator
+      # without re-running the job.
+      - name: Environment info
+        run: |
+          {
+            echo "### Environment"
+            echo '```'
+            xcodebuild -version
+            swift --version 2>&1 | head -2
+            echo "Runner image: ${ImageOS:-?} ${ImageVersion:-?}"
+            echo "Destination:  $DESTINATION"
+            echo '```'
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+          xcrun simctl list devices available | grep -i iphone || true
+      
       # Phase 1 - dependency resolution (binary target checksum, auth,
       # version conflicts fail here, not somewhere inside the build).
       - name: "Phase 1: Resolve packages"
