@@ -12,7 +12,7 @@ env:
   WORKSPACE_ARGS: "-project Examples/AlternativeOnboarding/AlternativeOnboarding.xcodeproj"   # or: -workspace X.xcworkspace
   SCHEME: "AlternativeOnboarding"
   DESTINATION: "platform=iOS Simulator,name=iPhone 16,OS=latest"
-  XCODE_VERSION: "26.4.1"
+  XCODE_VERSION: "27.2"
   # --------------------------------------
   DERIVED_DATA: ${{ github.workspace }}/.derivedData
   LOG_DIR: ${{ github.workspace }}/ci-logs
